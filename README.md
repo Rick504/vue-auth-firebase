@@ -75,22 +75,25 @@ pnpm add firebase
 Crie um arquivo chamado firebase.js na pasta src e cole suas credenciais:
 
 // src/firebase.js
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+
+```javascript
+import { initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-apiKey: "SUA_API_KEY",
-authDomain: "SEU_AUTH_DOMAIN",
-projectId: "SEU_PROJECT_ID",
-storageBucket: "SEU_STORAGE_BUCKET",
-messagingSenderId: "SEU_MESSAGING_SENDER_ID",
-appId: "SEU_APP_ID"
-};
+  apiKey: 'SUA_API_KEY',
+  authDomain: 'SEU_AUTH_DOMAIN',
+  projectId: 'SEU_PROJECT_ID',
+  storageBucket: 'SEU_STORAGE_BUCKET',
+  messagingSenderId: 'SEU_MESSAGING_SENDER_ID',
+  appId: 'SEU_APP_ID',
+}
 
 // Inicializa o Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const app = initializeApp(firebaseConfig)
+const auth = getAuth(app)
 
-export { auth };
+export { auth }
+```
 
 ⚠️ Não compartilhe suas credenciais publicamente! Para proteger sua chave API, você pode armazená-la em variáveis de ambiente (.env).
