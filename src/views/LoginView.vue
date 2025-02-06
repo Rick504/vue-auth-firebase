@@ -54,6 +54,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { auth } from '../firebase';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import AuthService from '../services/AuthService';
 
 const router = useRouter();
 const email = ref("");
@@ -66,13 +67,11 @@ const togglePasswordVisibility = () => {
 };
 
 const login = async () => {
-  const userSendData = {
-    email: email.value,
-    password: password.value,
-  }
   try {
     if (email.value && password.value) {
-      console.log('userSendData:', userSendData)
+      const authService = new AuthService();
+      const user = await authService.login(email.value, password.value);
+      console.log('user:', user)
       router.push("/dashboard");
     }
   } catch {
