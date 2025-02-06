@@ -8,7 +8,7 @@ class AuthService {
       const token = response.data?.token
 
       if (token) {
-        Cookies.set('x-access-token', token, { expires: 7, secure: true })
+        Cookies.set('x-access-token', token, { expires: 1 / 24, secure: true })
       }
 
       return response.data
