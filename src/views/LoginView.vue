@@ -35,6 +35,9 @@
               <i :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
             </button>
           </div>
+          <div class="mt-3" v-if="errorLogin">
+            <p class="text-danger">Usuário ou senha incorretos</p>
+          </div>
         </div>
 
         <div class="mt-4">
@@ -59,6 +62,7 @@ import AuthService from '../services/AuthService';
 const router = useRouter();
 const email = ref("");
 const password = ref("");
+const errorLogin = ref(false);
 
 const showPassword = ref(false);
 
@@ -71,10 +75,13 @@ const login = async () => {
     if (email.value && password.value) {
       const authService = new AuthService();
       const user = await authService.login(email.value, password.value);
+      errorLogin.value = false;
+
       console.log('user:', user)
       router.push("/dashboard");
     }
   } catch {
+    errorLogin.value = true;
     console.error("Erro ao autenticar:");
   }
 };
