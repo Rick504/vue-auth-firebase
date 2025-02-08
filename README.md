@@ -97,3 +97,18 @@ export { auth }
 ```
 
 ⚠️ Não compartilhe suas credenciais publicamente! Para proteger sua chave API, você pode armazená-la em variáveis de ambiente (.env).
+
+# Criar um arquivo .env
+
+```bash
+VITE_FIREBASE_API_KEY=firebaseConfig
+VITE_FIREBASE_AUTH_DOMAIN=firebaseConfig
+VITE_FIREBASE_PROJECT_ID=firebaseConfig
+VITE_FIREBASE_STORAGE_BUCKET=firebaseConfig
+VITE_FIREBASE_MESSAGING_SENDER_ID=firebaseConfig
+VITE_FIREBASE_APP_ID=firebaseConfig
+VITE_FIREBASE_MEASUREMENT_ID=firebaseConfig
+
+VITE_BASE_URL_BACKEND=seudominiobackend.com
+VITE_PROVIDER_ID_GOOGLE=idClientGoogle
+```
