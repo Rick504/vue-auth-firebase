@@ -1,15 +1,17 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL_BACKEND,
   timeout: 10000, // Tempo de espera de 10 segundos
 })
 
-// Interceptadores (opcional)
 http.interceptors.request.use(
   (config) => {
-    // Aqui você pode adicionar cabeçalhos personalizados (exemplo: token de autenticação)
-    // config.headers['Authorization'] = 'Bearer ' + token;
+    const token = Cookies.get('x-access-token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (error) => {
@@ -19,10 +21,14 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
   (response) => {
+    const token = response.data?.token
+
+    if (token) {
+      Cookies.set('x-access-token', token, { expires: 1 / 24, secure: true })
+    }
     return response
   },
   (error) => {
-    // Aqui você pode lidar com erros globais
     console.error('Erro global de resposta:', error)
     return Promise.reject(error)
   },

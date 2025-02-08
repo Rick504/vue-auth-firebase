@@ -58,6 +58,7 @@ import { useRouter } from "vue-router";
 import { auth } from '../firebase';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import AuthService from '../services/AuthService';
+import { LoginWithGoole } from '../types/auth'
 
 const router = useRouter();
 const email = ref("");
@@ -66,6 +67,8 @@ const errorLogin = ref(false);
 
 const showPassword = ref(false);
 
+const authService = new AuthService();
+
 const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
 };
@@ -73,11 +76,8 @@ const togglePasswordVisibility = () => {
 const login = async () => {
   try {
     if (email.value && password.value) {
-      const authService = new AuthService();
-      const user = await authService.login(email.value, password.value);
+      await authService.login(email.value, password.value);
       errorLogin.value = false;
-
-      console.log('user:', user)
       router.push("/dashboard");
     }
   } catch {
@@ -89,8 +89,21 @@ const login = async () => {
 const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   try {
-    const result = await signInWithPopup(auth, provider);
-    console.log("Usuário autenticado com Google:", result.user);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { user }: any = await signInWithPopup(auth, provider);
+    const { displayName, email, photoURL } = user
+    const dataGoogle: LoginWithGoole = {
+      provider: 'google',
+      idTokenGoogle: import.meta.env.VITE_PROVIDER_ID_GOOGLE,
+      user: {
+        name: displayName,
+        email: email,
+        image: photoURL,
+      }
+    }
+
+    await authService.loginWithGoogle(dataGoogle)
     router.push("/dashboard");
   } catch {
     console.error("Erro ao autenticar com Google:");

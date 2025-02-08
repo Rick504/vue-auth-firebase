@@ -1,15 +1,20 @@
 import http from './config/axios'
-import Cookies from 'js-cookie'
+import { LoginWithGoole } from '../types/auth'
 
 class AuthService {
   public async login(email: string, password: string) {
     try {
       const response = await http.post('/login', { email, password })
-      const token = response.data?.token
+      return response.data
+    } catch (error) {
+      console.error('Erro ao fazer login:', error)
+      throw error
+    }
+  }
 
-      if (token) {
-        Cookies.set('x-access-token', token, { expires: 1 / 24, secure: true })
-      }
+  public async loginWithGoogle(LoginWithGoole: LoginWithGoole) {
+    try {
+      const response = await http.post('/login/provider/google', LoginWithGoole)
 
       return response.data
     } catch (error) {

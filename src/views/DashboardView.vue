@@ -13,11 +13,11 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'vue-router';
-// import UserService from '../services/UserService';
+import UserService from '../services/UserService';
 
 export default {
   name: 'UserProfile',
@@ -29,15 +29,15 @@ export default {
       user.value = currentUser;
     });
 
-    // const getInfoUser = async () => {
-    //   try {
-    //       const userService = new UserService();
-    //       const userInfo = await userService.getUserInfo();
-    //       console.log('userInfo:', userInfo);
-    //   } catch (error) {
-    //     console.error('Erro ao realizar o GET:', error);
-    //   }
-    // };
+    const getInfoUser = async () => {
+      try {
+          const userService = new UserService();
+          const userInfo = await userService.getUserInfo();
+          console.log('userInfo:', userInfo);
+      } catch (error) {
+        console.error('Erro ao realizar o GET:', error);
+      }
+    };
 
     const logout = async () => {
       try {
@@ -48,6 +48,10 @@ export default {
         console.error('Erro ao deslogar:', error);
       }
     };
+
+    onMounted(() => {
+      getInfoUser();
+    });
 
     return { user, logout };
   }
