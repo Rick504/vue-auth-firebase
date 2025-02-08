@@ -1,9 +1,10 @@
 <template>
   <div v-if="user" class="text-center mt-5">
     <div>
-      <img class="rounded-pill" :src="user.photoURL" alt="Foto de perfil" />
+      <img class="rounded-pill" :src="user.photoURL ?? user.photo" alt="Foto de perfil" />
     </div>
     <p>Bem-vindo, {{ user.displayName }}</p>
+    <p>Nome: {{ user.name }}</p>
     <p>Email: {{ user.email }}</p>
     <button class="btn border" @click="logout">Sair</button>
   </div>
@@ -24,15 +25,17 @@ export default {
   setup() {
     const user = ref(auth.currentUser);
     const router = useRouter();
+    const authFirebase = ref(false)
 
     auth.onAuthStateChanged((currentUser) => {
       user.value = currentUser;
+      authFirebase.value = true
     });
 
     const getInfoUser = async () => {
         const userService = new UserService();
-        const userInfo = await userService.getUserInfo();
-        console.log('userInfo:', userInfo);
+        const { data } = await userService.getUserInfo();
+        user.value = data
     };
 
     const logout = async () => {
@@ -46,7 +49,7 @@ export default {
     };
 
     onMounted(() => {
-      getInfoUser();
+      if (!authFirebase.value) getInfoUser();
     });
 
     return { user, logout };
