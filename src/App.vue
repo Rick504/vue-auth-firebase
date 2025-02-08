@@ -8,3 +8,10 @@ const store = useStore()
   <LoaderPage v-if="store.loader" />
   <RouterView />
 </template>
+
+<style scoped>
+:global(body) {
+  background-color: rgb(30, 34, 36);
+  color: white;
+}
+</style>

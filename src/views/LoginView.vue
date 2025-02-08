@@ -58,6 +58,7 @@ import { useRouter } from "vue-router";
 import { auth } from '../firebase';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import AuthService from '../services/AuthService';
+import UserService from '../services/UserService';
 import { LoginWithGoole } from '../types/auth'
 
 import { useStore } from '../stores/index'
@@ -67,9 +68,7 @@ const router = useRouter();
 const email = ref("");
 const password = ref("");
 const errorLogin = ref(false);
-
 const showPassword = ref(false);
-
 const authService = new AuthService();
 
 const togglePasswordVisibility = () => {
@@ -80,15 +79,24 @@ const isLoader = (value: boolean) => {
   return store.loader = value
 }
 
+const getInfoUser = async () => {
+        const userService = new UserService();
+        const { data } = await userService.getUserInfo();
+        return data
+};
+
 const login = async () => {
   isLoader(true)
   try {
     if (email.value && password.value) {
-      const user = await authService.login(email.value, password.value);
-
-      console.log('user:', user)
-      errorLogin.value = false;
-      router.push("/dashboard");
+      const userAuth = await authService.login(email.value, password.value);
+      if (userAuth) {
+        const userInfo = await getInfoUser();
+        store.user = userInfo
+        router.push("/dashboard");
+        errorLogin.value = false;
+        isLoader(false)
+      }
     }
   } catch {
     isLoader(false)
@@ -115,9 +123,14 @@ const loginWithGoogle = async () => {
       }
     }
 
-    await authService.loginWithGoogle(dataGoogle)
-    isLoader(false)
-    router.push("/dashboard");
+    const userAuthGoogle = await authService.loginWithGoogle(dataGoogle)
+    if (userAuthGoogle) {
+        const userInfo = await getInfoUser();
+        store.user = userInfo
+        router.push("/dashboard");
+        errorLogin.value = false;
+        isLoader(false)
+      }
   } catch {
     isLoader(false)
     console.error("Erro ao autenticar com Google:");
