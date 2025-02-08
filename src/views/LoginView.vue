@@ -60,6 +60,9 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import AuthService from '../services/AuthService';
 import { LoginWithGoole } from '../types/auth'
 
+import { useStore } from '../stores/index'
+const store = useStore()
+
 const router = useRouter();
 const email = ref("");
 const password = ref("");
@@ -73,20 +76,29 @@ const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
 };
 
+const isLoader = (value: boolean) => {
+  return store.loader = value
+}
+
 const login = async () => {
+  isLoader(true)
   try {
     if (email.value && password.value) {
-      await authService.login(email.value, password.value);
+      const user = await authService.login(email.value, password.value);
+
+      console.log('user:', user)
       errorLogin.value = false;
       router.push("/dashboard");
     }
   } catch {
+    isLoader(false)
     errorLogin.value = true;
     console.error("Erro ao autenticar:");
   }
 };
 
 const loginWithGoogle = async () => {
+  isLoader(true)
   const provider = new GoogleAuthProvider();
   try {
 
@@ -104,8 +116,10 @@ const loginWithGoogle = async () => {
     }
 
     await authService.loginWithGoogle(dataGoogle)
+    isLoader(false)
     router.push("/dashboard");
   } catch {
+    isLoader(false)
     console.error("Erro ao autenticar com Google:");
   }
 };
