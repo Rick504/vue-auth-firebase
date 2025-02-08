@@ -99,7 +99,7 @@ const loginWithGoogle = async () => {
       user: {
         name: displayName,
         email: email,
-        image: photoURL,
+        photo: photoURL,
       }
     }
 
