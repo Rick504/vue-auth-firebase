@@ -7,7 +7,6 @@ class UserService {
 
       return response.data
     } catch (error) {
-      console.error('Erro ao obter informações do usuário', error)
       throw error
     }
   }

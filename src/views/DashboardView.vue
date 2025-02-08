@@ -30,13 +30,9 @@ export default {
     });
 
     const getInfoUser = async () => {
-      try {
-          const userService = new UserService();
-          const userInfo = await userService.getUserInfo();
-          console.log('userInfo:', userInfo);
-      } catch (error) {
-        console.error('Erro ao realizar o GET:', error);
-      }
+        const userService = new UserService();
+        const userInfo = await userService.getUserInfo();
+        console.log('userInfo:', userInfo);
     };
 
     const logout = async () => {

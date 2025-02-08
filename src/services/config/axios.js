@@ -8,7 +8,8 @@ const http = axios.create({
 
 http.interceptors.request.use(
   (config) => {
-    const token = Cookies.get('x-access-token')
+    const token = Cookies.get('Authorization')
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -24,7 +25,7 @@ http.interceptors.response.use(
     const token = response.data?.token
 
     if (token) {
-      Cookies.set('x-access-token', token, { expires: 1 / 24, secure: true })
+      Cookies.set('Authorization', token, { expires: 1 / 24, secure: true })
     }
     return response
   },

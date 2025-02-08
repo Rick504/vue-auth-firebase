@@ -7,7 +7,6 @@ class AuthService {
       const response = await http.post('/login', { email, password })
       return response.data
     } catch (error) {
-      console.error('Erro ao fazer login:', error)
       throw error
     }
   }
@@ -18,7 +17,6 @@ class AuthService {
 
       return response.data
     } catch (error) {
-      console.error('Erro ao fazer login:', error)
       throw error
     }
   }
