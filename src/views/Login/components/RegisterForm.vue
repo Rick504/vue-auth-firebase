@@ -6,9 +6,9 @@
         <input
           id="userName"
           v-model="userName"
-          type="userName"
+          type="text"
           class="form-control"
-          placeholder="Digite seu e-mail"
+          placeholder="Digite seu nome"
           required
         />
       </div>
@@ -65,7 +65,7 @@
         </div>
       </div>
 
-      <TermTex />
+      <TermText />
 
       <div class="mt-4">
         <button type="submit" class="btn btn-success w-100">Registrar</button>
@@ -80,17 +80,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import validator from 'validator'
-import TermTex from './components/TermTex.vue'
-// import { useRouter } from 'vue-router'
-// import UserService from '../../../services/UserService'
+import TermText from './components/TermText.vue'
+import { useRouter } from 'vue-router'
+import UserService from '../../../services/UserService'
+import { CreateUser } from '../../../types/user'
 
 import { useStore } from '../../../stores/index'
+import router from '../../../router'
 const store = useStore()
 
 const userName = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+const userService = new UserService()
 
 const textPositions = ref({
   errorUserName: '',
@@ -102,6 +105,12 @@ function clearErrorsForm() {
   setError('errorUserName', '')
   setError('errorEmail', '')
   setError('errorConfirmPassword', '')
+}
+
+const getInfoUser = async () => {
+  const userService = new UserService()
+  const { data } = await userService.getUserInfo()
+  return data
 }
 
 function validateMinLength(field: string, value: string, min: number) {
@@ -142,27 +151,23 @@ const register = async () => {
 
   clearErrorsForm()
 
-  // Validação de nome de usuário (mínimo de 6 caracteres e sem números)
   if (!validateMinLength('errorUserName', userName.value, 6) || !validateUserName(userName.value)) {
     isLoader(false)
     return
   }
 
-  // Validação de e-mail
   if (!isEmailValid(email.value)) {
     setError('errorEmail', 'Por favor, insira um e-mail válido.')
     isLoader(false)
     return
   }
 
-  // Validação de senhas iguais
   if (password.value !== confirmPassword.value) {
     setError('errorConfirmPassword', 'As senhas não são iguais.')
     isLoader(false)
     return
   }
 
-  // Validação de senha mínima
   if (!validateMinLength('errorPassword', password.value, 6) || !validateMinLength('errorConfirmPassword', confirmPassword.value, 6)) {
     isLoader(false)
     return
@@ -170,14 +175,19 @@ const register = async () => {
 
   try {
     if (userName.value && email.value && password.value) {
-      const user = {
+      const user: CreateUser = {
         name: userName.value,
         email: email.value,
         password: password.value,
       }
       clearErrorsForm()
-      console.log(user)
-      isLoader(false)
+      const userSave = await userService.registerUser(user)
+      if (userSave) {
+        const userInfo = await getInfoUser()
+        store.user = userInfo
+        isLoader(false)
+        return router.push('/dashboard')
+      }
     }
   } catch {
     isLoader(false)

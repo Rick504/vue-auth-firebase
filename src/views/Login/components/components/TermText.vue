@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const termsLink = 'termsConditions';
 const privacyPolicy = 'privacyPolicy';
 </script>
