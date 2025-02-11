@@ -53,7 +53,7 @@
         <div class="input-group">
           <input
             id="confirmPassword"
-            type="confirmPassword"
+            type="password"
             v-model="confirmPassword"
             class="form-control"
             placeholder="Digite sua senha"
@@ -65,9 +65,12 @@
         </div>
       </div>
 
+      <TermTex />
+
       <div class="mt-4">
         <button type="submit" class="btn btn-green w-100">Registrar</button>
       </div>
+
     </form>
   </div>
 </template>
@@ -75,6 +78,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import validator from 'validator'
+import TermTex from './components/TermTex.vue'
 // import { useRouter } from 'vue-router'
 // import UserService from '../../../services/UserService'
 
