@@ -36,31 +36,19 @@
             <p class="text-danger">Usuário ou senha incorretos</p>
           </div>
         </div>
-
-        <div class="mt-4">
-          <button type="submit" class="btn btn-primary w-100">Entrar</button>
-          <button @click.prevent="loginWithGoogle" class="btn border w-100 mt-2">
-            <img
-              src="/imgs/icons/svg/google.svg"
-              width="20"
-              class="me-2"
-              alt="Google"
-            />
-            Entrar com Google
-          </button>
-        </div>
+        <button type="submit" class="btn btn-primary w-100">Entrar</button>
       </form>
+      <div class="text-center mt-3 mb-2">
+        <small>Conectar com:</small>
+      </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { auth } from '../../../firebase'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import AuthService from '../../../services/AuthService'
 import UserService from '../../../services/UserService'
-import { LoginWithGoole } from '../../../types/auth'
 
 import { useStore } from '../../../stores/index'
 const store = useStore()
@@ -106,36 +94,7 @@ const login = async () => {
   }
 }
 
-const loginWithGoogle = async () => {
-  isLoader(true)
-  const provider = new GoogleAuthProvider()
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { user }: any = await signInWithPopup(auth, provider)
-    const { displayName, email, photoURL } = user
-    const dataGoogle: LoginWithGoole = {
-      provider: 'google',
-      idTokenGoogle: import.meta.env.VITE_PROVIDER_ID_GOOGLE,
-      user: {
-        name: displayName,
-        email: email,
-        photo: photoURL,
-      },
-    }
 
-    const userAuthGoogle = await authService.loginWithGoogle(dataGoogle)
-    if (userAuthGoogle) {
-      const userInfo = await getInfoUser()
-      store.user = userInfo
-      router.push('/dashboard')
-      errorLogin.value = false
-      isLoader(false)
-    }
-  } catch {
-    isLoader(false)
-    console.error('Erro ao autenticar com Google:')
-  }
-}
 </script>
 
 <style>

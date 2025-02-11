@@ -68,10 +68,12 @@
       <TermTex />
 
       <div class="mt-4">
-        <button type="submit" class="btn btn-green w-100">Registrar</button>
+        <button type="submit" class="btn btn-success w-100">Registrar</button>
       </div>
-
     </form>
+    <div class="text-center mt-3 mb-2">
+      <small>Ou registre-se com:</small>
+    </div>
   </div>
 </template>
 
