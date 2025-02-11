@@ -14,14 +14,14 @@
 </template>
 
 <script setup lang="ts">
-import router from '../../router';
+import router from '../../router'
 import { useStore } from '../../stores/index'
-import ImgProfile from './componentes/ImgProfile.vue'
+import ImgProfile from './components/ImgProfile.vue'
 
 const store = useStore()
 
 const logout = () => {
-  router.push("/");
+  router.push('/')
   store.user = {}
 }
 </script>

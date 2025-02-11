@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="js">
 import { computed } from 'vue'
 import { useStore } from '../../../stores/index'
 
@@ -9,7 +9,7 @@ const profileImage = computed(() => {
     return '/imgs/icons/png/profile.png'
   }
 
-  return store.user?.photoURL?.trim() || store.user?.photo?.trim()
+  return store.user?.photo?.trim()
 })
 </script>
 

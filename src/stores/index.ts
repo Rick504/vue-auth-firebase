@@ -4,7 +4,7 @@ export const useStore = defineStore('main', {
   state: () => {
     return {
       loader: false,
-      user: {}
+      user: {},
     }
   },
   persist: {

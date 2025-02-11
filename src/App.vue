@@ -9,9 +9,3 @@ const store = useStore()
   <RouterView />
 </template>
 
-<style scoped>
-:global(body) {
-  background-color: rgb(30, 34, 36);
-  color: white;
-}
-</style>
