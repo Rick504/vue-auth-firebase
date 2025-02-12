@@ -3,8 +3,7 @@
     <div>
       <ImgProfile />
     </div>
-    <p>Bem-vindo, {{ store.user.displayName }}</p>
-    <p>Nome: {{ store.user.name }}</p>
+    <p>{{ store.user.name }}</p>
     <p>Email: {{ store.user.email }}</p>
   </div>
   <div v-else>
