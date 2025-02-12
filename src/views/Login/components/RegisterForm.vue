@@ -4,7 +4,7 @@
       <div class="mb-3">
         <label for="userName" class="form-label">Nome</label>
         <input
-          id="userName"
+          id="name"
           v-model="userName"
           type="text"
           class="form-control"
@@ -148,7 +148,6 @@ const isLoader = (value: boolean) => {
 
 const register = async () => {
   isLoader(true)
-
   clearErrorsForm()
 
   if (!validateMinLength('errorUserName', userName.value, 6) || !validateUserName(userName.value)) {
@@ -185,8 +184,8 @@ const register = async () => {
       if (userSave) {
         const userInfo = await getInfoUser()
         store.user = userInfo
+        router.push('/dashboard')
         isLoader(false)
-        return router.push('/dashboard')
       }
     }
   } catch {

@@ -12,6 +12,7 @@ http.interceptors.request.use(
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
+      console.log('get token', config.headers)
     }
     return config
   },
@@ -21,11 +22,12 @@ http.interceptors.request.use(
 )
 
 http.interceptors.response.use(
-  (response) => {
+  async (response) => {
     const token = response.data?.token
 
     if (token) {
       Cookies.set('Authorization', token, { expires: 1 / 24, secure: true })
+      console.log('set token')
     }
     return response
   },

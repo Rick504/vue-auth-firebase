@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { createBaseVNode, ref } from 'vue'
+import {ref } from 'vue'
 import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
 
