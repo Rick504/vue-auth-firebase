@@ -1,6 +1,6 @@
-<script setup lang="js">
+<script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from '../../../stores/index'
+import { useStore } from '@/stores/index'
 
 const store = useStore()
 

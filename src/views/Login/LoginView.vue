@@ -29,14 +29,14 @@ import {ref } from 'vue'
 import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
 
-import { auth } from '../../firebase'
+import { auth } from '@/firebase'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { LoginWithGoole } from '../../types/auth'
-import AuthService from '../../services/AuthService'
-import UserService from '../../services/UserService'
+import { LoginWithGoole } from '@/types/auth'
+import AuthService from '@/services/AuthService'
+import UserService from '@/services/UserService'
 
-import { useStore } from '../../stores/index'
-import router from '../../router'
+import { useStore } from '@/stores/index'
+import router from '@/router'
 const store = useStore()
 
 const authService = new AuthService()

@@ -82,11 +82,11 @@ import { ref } from 'vue'
 import validator from 'validator'
 import TermText from './components/TermText.vue'
 import { useRouter } from 'vue-router'
-import UserService from '../../../services/UserService'
-import { CreateUser } from '../../../types/user'
+import UserService from '@/services/UserService'
+import { CreateUser } from '@/types/user'
 
-import { useStore } from '../../../stores/index'
-import router from '../../../router'
+import { useStore } from '@/stores/index'
+import router from '@/router'
 const store = useStore()
 
 const userName = ref('')
