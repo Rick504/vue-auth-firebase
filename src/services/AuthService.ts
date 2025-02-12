@@ -1,10 +1,10 @@
 import http from './config/axios'
-import { LoginWithGoole } from '../types/auth'
+import { LoginWithGoole, LoginUserSimple } from '../types/auth'
 
 class AuthService {
-  public async login(email: string, password: string) {
+  public async login(dataUser: LoginUserSimple) {
     try {
-      const response = await http.post('/login', { email, password })
+      const response = await http.post('/login', dataUser)
       return response.data
     } catch (error) {
       throw error

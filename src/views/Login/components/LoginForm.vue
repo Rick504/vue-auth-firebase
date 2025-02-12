@@ -36,6 +36,12 @@
             <p class="text-danger">Usuário ou senha incorretos</p>
           </div>
         </div>
+
+        <label for="rememberMe" class="py-3">
+          <input v-model="rememberMe" type="checkbox" id="rememberMe">
+          Lembrar | <a href="">Esqueceu a senha</a>?
+        </label>
+
         <button type="submit" class="btn btn-primary w-100">Entrar</button>
       </form>
       <div class="text-center mt-3 mb-2">
@@ -49,6 +55,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
+import { LoginUserSimple } from '@/types/auth'
 
 import { useStore } from '@/stores/index'
 const store = useStore()
@@ -56,6 +63,7 @@ const store = useStore()
 const router = useRouter()
 const email = ref('')
 const password = ref('')
+const rememberMe = ref(false)
 const errorLogin = ref(false)
 const showPassword = ref(false)
 const authService = new AuthService()
@@ -76,9 +84,14 @@ const getInfoUser = async () => {
 
 const login = async () => {
   isLoader(true)
+  const userInfoAuth: LoginUserSimple = {
+    email: email.value,
+    password: password.value,
+    rememberMe: rememberMe.value
+  }
   try {
     if (email.value && password.value) {
-      const userAuth = await authService.login(email.value, password.value)
+      const userAuth = await authService.login(userInfoAuth)
       if (userAuth) {
         const userInfo = await getInfoUser()
         store.user = userInfo

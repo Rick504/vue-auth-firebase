@@ -7,3 +7,9 @@ export type LoginWithGoole = {
     photo: string
   }
 }
+
+export type LoginUserSimple = {
+  email: string
+  password: string
+  rememberMe: boolean
+}
