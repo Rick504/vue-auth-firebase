@@ -14,5 +14,11 @@ const profileImage = computed(() => {
 </script>
 
 <template>
-  <img width="100" class="rounded-pill" :src="profileImage" alt="Foto de perfil" />
+  <img
+    v-if="profileImage"
+    width="100"
+    class="rounded-pill"
+    :src="profileImage"
+    alt="Foto de perfil"
+    />
 </template>

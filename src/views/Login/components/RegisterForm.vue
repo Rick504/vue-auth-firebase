@@ -175,8 +175,8 @@ const register = async () => {
   try {
     if (userName.value && email.value && password.value) {
       const user: CreateUser = {
-        name: userName.value,
-        email: email.value,
+        name: userName.value.trim(),
+        email: email.value.trim(),
         password: password.value,
       }
       clearErrorsForm()
