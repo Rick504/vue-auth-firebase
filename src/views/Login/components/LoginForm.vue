@@ -58,6 +58,7 @@ import UserService from '@/services/UserService'
 import { LoginUserSimple } from '@/types/auth'
 
 import { useStore } from '@/stores/index'
+import { StoreUser } from '@/types/user'
 const store = useStore()
 
 const router = useRouter()
@@ -94,7 +95,7 @@ const login = async () => {
       const userAuth = await authService.login(userInfoAuth)
       if (userAuth) {
         const userInfo = await getInfoUser()
-        store.user = userInfo
+        store.user = userInfo as StoreUser
         router.push('/dashboard')
         errorLogin.value = false
         isLoader(false)

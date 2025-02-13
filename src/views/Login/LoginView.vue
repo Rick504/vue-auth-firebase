@@ -37,6 +37,7 @@ import UserService from '@/services/UserService'
 
 import { useStore } from '@/stores/index'
 import router from '@/router'
+import { StoreUser } from '@/types/user'
 const store = useStore()
 
 const authService = new AuthService()
@@ -76,7 +77,7 @@ const loginWithGoogle = async () => {
     const userAuthGoogle = await authService.loginWithGoogle(dataGoogle)
     if (userAuthGoogle) {
       const userInfo = await getInfoUser()
-      store.user = userInfo
+      store.user = userInfo as StoreUser
       router.push('/dashboard')
       isLoader(false)
     }

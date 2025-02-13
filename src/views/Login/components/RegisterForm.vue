@@ -79,7 +79,7 @@ import { ref } from 'vue'
 import validator from 'validator'
 import TermText from './components/TermText.vue'
 import UserService from '@/services/UserService'
-import { CreateUser } from '@/types/user'
+import { CreateUser, StoreUser } from '@/types/user'
 
 import { useStore } from '@/stores/index'
 import router from '@/router'
@@ -179,7 +179,7 @@ const register = async () => {
       const userSave = await userService.registerUser(user)
       if (userSave) {
         const userInfo = await getInfoUser()
-        store.user = userInfo
+        store.user = userInfo as StoreUser
         router.push('/dashboard')
         isLoader(false)
       }

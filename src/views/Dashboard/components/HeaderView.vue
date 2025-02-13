@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import router from '@/router'
 import { useStore } from '@/stores/index'
+import { StoreUser } from '@/types/user'
 const store = useStore()
 
 const logout = () => {
@@ -24,6 +25,6 @@ const logout = () => {
       name: null,
       email: null,
       photo: ''
-    }
+    } as StoreUser
 }
 </script>
