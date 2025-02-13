@@ -4,7 +4,11 @@ export const useStore = defineStore('main', {
   state: () => {
     return {
       loader: false,
-      user: {},
+      user: {
+        name: null,
+        email: null,
+        photo: ''
+      },
     }
   },
   persist: {

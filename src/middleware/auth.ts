@@ -5,7 +5,7 @@ export default function useAuth() {
   const store = useStore()
   const router = useRouter()
 
-  if (!store.user || Object.keys(store.user).length === 0) {
+  if (!store.user.name || !store.user.email) {
     router.push('/')
   }
 }

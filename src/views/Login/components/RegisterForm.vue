@@ -43,9 +43,6 @@
             required
           />
         </div>
-        <div class="mt-3" v-if="textPositions.errorPassword">
-          <p class="text-danger">{{ textPositions.errorPassword }}</p>
-        </div>
       </div>
 
       <div class="mb-3 position-relative">
@@ -81,7 +78,6 @@
 import { ref } from 'vue'
 import validator from 'validator'
 import TermText from './components/TermText.vue'
-import { useRouter } from 'vue-router'
 import UserService from '@/services/UserService'
 import { CreateUser } from '@/types/user'
 

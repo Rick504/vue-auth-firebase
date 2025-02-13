@@ -3,7 +3,7 @@
     <div>
       <ImgProfile />
     </div>
-    <p>{{ store.user.name }}</p>
+    <p v-if="store.user.name">{{ store.user.name }}</p>
     <p>Email: {{ store.user.email }}</p>
   </div>
   <div v-else>

@@ -20,6 +20,10 @@ const store = useStore()
 
 const logout = () => {
   router.push('/')
-  store.user = {}
+  store.user = {
+      name: null,
+      email: null,
+      photo: ''
+    }
 }
 </script>
