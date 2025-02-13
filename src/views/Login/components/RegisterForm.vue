@@ -91,7 +91,7 @@ const password = ref('')
 const confirmPassword = ref('')
 const userService = new UserService()
 
-const textPositions = ref({
+const textPositions = ref<{ [key: string]: string }>({
   errorUserName: '',
   errorEmail: '',
   errorConfirmPassword: '',
