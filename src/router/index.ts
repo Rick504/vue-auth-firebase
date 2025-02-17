@@ -6,14 +6,23 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: '/login',
+      name: 'login',
       component: LoginView,
     },
     {
-      path: '/dashboard',
+      path: '/',
       name: 'dashboard',
       component: () => import('../views/Dashboard/DashboardView.vue'),
+      beforeEnter: (to, from, next) => {
+        useAuth()
+        next()
+      },
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../views/Profile/ProfileView.vue'),
       beforeEnter: (to, from, next) => {
         useAuth()
         next()

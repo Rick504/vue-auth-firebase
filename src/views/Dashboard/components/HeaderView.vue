@@ -6,7 +6,7 @@
       <i class="bi bi-gear"></i>
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-      <li><a class="dropdown-item" href="#">Conta</a></li>
+      <li><a class="dropdown-item" href="/profile">Conta</a></li>
       <li><button class="dropdown-item" @click="logout">Sair</button></li>
     </ul>
   </div>
@@ -20,7 +20,7 @@ import { StoreUser } from '@/types/user'
 const store = useStore()
 
 const logout = () => {
-  router.push('/')
+  router.push('/login')
   store.user = {
       name: null,
       email: null,

@@ -78,7 +78,7 @@ const loginWithGoogle = async () => {
     if (userAuthGoogle) {
       const userInfo = await getInfoUser()
       store.user = userInfo as StoreUser
-      router.push('/dashboard')
+      router.push('/')
       isLoader(false)
     }
   } catch {

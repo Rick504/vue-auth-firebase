@@ -96,7 +96,7 @@ const login = async () => {
       if (userAuth) {
         const userInfo = await getInfoUser()
         store.user = userInfo as StoreUser
-        router.push('/dashboard')
+        router.push('/')
         errorLogin.value = false
         isLoader(false)
       }

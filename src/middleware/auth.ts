@@ -6,6 +6,6 @@ export default function useAuth() {
   const router = useRouter()
 
   if (!store.user.name || !store.user.email) {
-    router.push('/')
+    router.push('/login')
   }
 }
