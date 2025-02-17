@@ -12,6 +12,15 @@ export const useStore = defineStore('main', {
       },
     }
   },
+  actions: {
+    resetUser() {
+      this.user = {
+        name: null,
+        email: null,
+        photo: '',
+      }
+    },
+  },
   persist: {
     storage: sessionStorage,
   },

@@ -1,11 +1,10 @@
 <template>
   <div class="profile">
-    <button class="btn text-danger">
-      Deletar conta
-    </button>
+    <DeletedAccount />
   </div>
 </template>
 <script setup lang="ts">
+import DeletedAccount from './components/DeletedAccount.vue'
 
 </script>
 
