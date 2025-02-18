@@ -20,6 +20,10 @@
             />
           </button>
         </div>
+
+        <div class="mt-3 text-center" v-if="true">
+          <p class="text-danger">Erro ao realizar login com Google, entre em contato com <a href="/suporte">suporte</a>.</p>
+        </div>
     </div>
   </div>
 </template>
@@ -42,6 +46,7 @@ const store = useStore()
 
 const authService = new AuthService()
 const showLogin = ref(true)
+const errorLoginGoole = ref(false)
 
 const toggleLoginVisibility = (value: boolean) => {
   showLogin.value = value
@@ -83,6 +88,7 @@ const loginWithGoogle = async () => {
     }
   } catch {
     isLoader(false)
+    errorLoginGoole.value = true
     console.error('Erro ao autenticar com Google:')
   }
 }
