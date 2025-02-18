@@ -1,11 +1,9 @@
 <template>
   <div>
-    <!-- Button trigger modal -->
     <button type="button" class="btn border-danger text-danger px-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Deletar conta
     </button>
 
-    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -23,14 +21,19 @@
   </div>
 </template>
 <script setup lang="ts">
+import UserService from '@/services/UserService'
 import { useStore } from '@/stores'
 import { useRouter } from 'vue-router'
 
  const store = useStore()
   const router = useRouter()
 
-  function deleteAccount() {
-    console.log('deleteAccount')
+  const userService = new UserService()
+
+  async function deleteAccount() {
+    const response = await userService.deleteAccontUser()
+
+    console.log('deleteAccount', response)
     router.push('/login')
     store.resetUser()
 }

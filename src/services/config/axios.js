@@ -30,7 +30,7 @@ http.interceptors.response.use(
     return response
   },
   (error) => {
-    console.error('Erro global de resposta:', error)
+    console.error('Erro global de resposta:', error.AxiosError.response)
     return Promise.reject(error)
   },
 )

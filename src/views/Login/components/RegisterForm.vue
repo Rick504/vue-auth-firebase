@@ -64,6 +64,10 @@
 
       <TermText />
 
+      <div class="mt-3" v-if="textPositions.errorRegisterUser">
+        <p class="text-danger">{{ textPositions.errorRegisterUser }}</p>
+      </div>
+
       <div class="mt-4">
         <button type="submit" class="btn btn-success w-100">Registrar</button>
       </div>
@@ -95,12 +99,14 @@ const textPositions = ref<{ [key: string]: string }>({
   errorUserName: '',
   errorEmail: '',
   errorConfirmPassword: '',
+  errorRegisterUser: ''
 })
 
 function clearErrorsForm() {
   setError('errorUserName', '')
   setError('errorEmail', '')
   setError('errorConfirmPassword', '')
+  setError('errorRegisterUser', '')
 }
 
 const getInfoUser = async () => {
@@ -177,6 +183,7 @@ const register = async () => {
       }
       clearErrorsForm()
       const userSave = await userService.registerUser(user)
+
       if (userSave) {
         const userInfo = await getInfoUser()
         store.user = userInfo as StoreUser
@@ -186,6 +193,7 @@ const register = async () => {
     }
   } catch {
     isLoader(false)
+    setError('errorRegisterUser', 'Este e-mail já está em uso. Tente fazer login ou cadastre-se com outro endereço de e-mail.')
   }
 }
 

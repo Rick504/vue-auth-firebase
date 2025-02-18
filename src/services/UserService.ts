@@ -21,6 +21,16 @@ class UserService {
       throw error
     }
   }
+
+  public async deleteAccontUser() {
+    try {
+      const response = await http.delete('/delete/user')
+
+      return response
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default UserService
