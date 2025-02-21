@@ -21,7 +21,7 @@
           </button>
         </div>
 
-        <div class="mt-3 text-center" v-if="true">
+        <div class="mt-3 text-center" v-if="errorLoginGoole">
           <p class="text-danger">Erro ao realizar login com Google, entre em contato com <a href="/suporte">suporte</a>.</p>
         </div>
     </div>
