@@ -37,9 +37,11 @@
           </div>
         </div>
 
-        <label for="rememberMe" class="py-3">
-          <input v-model="rememberMe" type="checkbox" id="rememberMe">
-          Lembrar | <a href="">Esqueceu a senha</a>?
+        <label for="rememberMe" class="py-3 d-flex align-items-center">
+          <div>
+            <input v-model="rememberMe" type="checkbox" id="rememberMe"> Lembrar |
+          </div>
+          <ModalForgotEmail />
         </label>
 
         <button type="submit" class="btn btn-primary w-100">Entrar</button>
@@ -56,6 +58,7 @@ import { useRouter } from 'vue-router'
 import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
 import { LoginUserSimple } from '@/types/auth'
+import ModalForgotEmail from './components/ModalForgotEmail.vue'
 
 import { useStore } from '@/stores/index'
 import { StoreUser } from '@/types/user'
