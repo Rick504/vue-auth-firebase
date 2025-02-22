@@ -1,5 +1,5 @@
 import { CreateUser } from '../types/user'
-import http from './config/axios'
+import {http} from './config/axios'
 
 class UserService {
   public async getUserInfo() {

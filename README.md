@@ -110,5 +110,6 @@ VITE_FIREBASE_APP_ID=firebaseConfig
 VITE_FIREBASE_MEASUREMENT_ID=firebaseConfig
 
 VITE_BASE_URL_BACKEND=seudominiobackend.com
+VITE_BASE_URL_SERVICE_EMAILS=servicoemails
 VITE_PROVIDER_ID_GOOGLE=idClientGoogle
 ```

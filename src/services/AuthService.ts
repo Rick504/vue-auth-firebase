@@ -1,4 +1,4 @@
-import http from './config/axios'
+import {http} from './config/axios'
 import { LoginWithGoole, LoginUserSimple } from '../types/auth'
 
 class AuthService {

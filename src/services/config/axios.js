@@ -1,38 +1,39 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-const http = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL_BACKEND,
-  timeout: 10000, // Tempo de espera de 10 segundos
-})
+function options(url) {
+  return {
+    baseURL: url,
+    timeout: 10000,
+  }
+}
 
-http.interceptors.request.use(
-  (config) => {
-    const token = Cookies.get('Authorization')
+const http = axios.create({ ...options(import.meta.env.VITE_BASE_URL_BACKEND) })
+const httpEmails = axios.create({ ...options(import.meta.env.VITE_BASE_URL_SERVICE_EMAILS) })
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  },
-)
+const authInterceptor = (config) => {
+  const token = Cookies.get('Authorization')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+}
 
-http.interceptors.response.use(
-  async (response) => {
-    const token = response.data?.token
+const errorInterceptor = (error) => Promise.reject(error)
+const responseInterceptor = async (response) => {
+  const token = response.data?.token
+  if (token) {
+    Cookies.set('Authorization', token, { expires: 1 / 24, secure: true }) // 1 hora
+  }
+  return response
+}
 
-    if (token) {
-      Cookies.set('Authorization', token, { expires: 1 / 24, secure: true })
-    }
-    return response
-  },
-  (error) => {
-    console.error('Erro global de resposta:', error.AxiosError.response)
-    return Promise.reject(error)
-  },
-)
+const responseErrorInterceptor = (error) => {
+  console.error('Erro global de resposta:', error.response)
+  return Promise.reject(error)
+}
 
-export default http
+http.interceptors.request.use(authInterceptor, errorInterceptor)
+http.interceptors.response.use(responseInterceptor, responseErrorInterceptor)
+
+export { http, httpEmails }
