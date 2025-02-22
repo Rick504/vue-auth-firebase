@@ -31,6 +31,16 @@ class UserService {
       throw error
     }
   }
+
+  public async requestPasswordReset(email: string) {
+    try {
+      const response = await http.post('/request/password/reset', { email })
+
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default UserService

@@ -1,9 +1,10 @@
+import { SendEmailRefrashPassword } from '@/types/email'
 import { httpEmails } from './config/axios'
 
-class UserService {
-  public async sendEmailResetPassword() {
+class EmailService {
+  public async sendEmailResetPassword(dataEmail: SendEmailRefrashPassword) {
     try {
-      const response = await httpEmails.post('/send-email')
+      const response = await httpEmails.post('/send-refrash-password', dataEmail)
 
       return response
     } catch (error) {
@@ -12,4 +13,4 @@ class UserService {
   }
 }
 
-export default UserService
+export default EmailService
