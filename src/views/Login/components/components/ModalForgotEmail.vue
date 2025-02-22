@@ -57,6 +57,7 @@ import validator from 'validator'
 import { ref } from 'vue'
 
 const email = ref('')
+const linkRefrashPassword = ref('')
 const msgError = ref('')
 const erroEmail = ref(false)
 const isSending = ref(false)
@@ -91,22 +92,14 @@ async function sendEmail() {
     return
   }
 
-  const dataEmail = {
-    to: email.value,
-    subject: 'Recuperação de Senha',
-    text: 'Recebemos um pedido para redefinir a senha da sua conta. Para continuar, clique no botão abaixo:',
-    link: 'www.linkrefrashsenha.com',
-  }
-
   const responseEmailService = await userService
-    .requestPasswordReset(dataEmail.to)
+    .requestPasswordReset(email.value)
     .then((response) => {
-      console.log('responseUserService:', response)
+      linkRefrashPassword.value =  response.resetLink
       return response
     })
     .catch((error) => {
       const axiosError = error
-
       if (axiosError.response?.status === 404) {
         insertError(true, 'Usuário não encontrado.')
         return
@@ -116,17 +109,18 @@ async function sendEmail() {
         insertError(true, `A redefinição de senha não está disponível para contas criadas com o Google. Use a opção 'Entrar com Google' na tela de login.`)
         return
       }
-
-      console.log('errorUserService:', axiosError.response?.status)
     })
 
   if (responseEmailService) {
-    const responseEmailService = await emailService.sendEmailResetPassword(dataEmail)
-    console.log('responseEmailService:', responseEmailService)
-
-    if (responseEmailService) {
-      isSending.value = true
+     const dataEmail = {
+      to: email.value,
+      link: linkRefrashPassword.value,
     }
+
+    const responseEmailService = await emailService.sendEmailResetPassword(dataEmail)
+
+    if (responseEmailService)
+      return isSending.value = true
   }
 }
 </script>
