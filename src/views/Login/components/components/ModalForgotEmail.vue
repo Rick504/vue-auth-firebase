@@ -20,6 +20,7 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              @click="clearModal"
             ></button>
           </div>
           <div class="modal-body">
@@ -34,9 +35,13 @@
             <p>Digite seu e-mail abaixo:</p>
             <input v-model="email" type="text" />
             <p v-if="erroEmail" class="text-danger" v-text="msgError"></p>
+            <p v-if="isSending" class="text-success mt-2">
+              E-mail enviado com sucesso! <br>
+              Por favor, verifique sua caixa de entrada.
+            </p>
           </div>
           <div class="modal-footer d-flex justify-content-start">
-            <button @click="sendEmail" type="button" class="btn btn-success px-5">
+            <button @click="sendEmail" type="button" class="btn btn-success px-5" :disabled="isSending">
               <strong>Enviar</strong>
             </button>
           </div>
@@ -54,9 +59,15 @@ import { ref } from 'vue'
 const email = ref('')
 const msgError = ref('')
 const erroEmail = ref(false)
+const isSending = ref(false)
 
 const userService = new UserService()
 const emailService = new EmailService()
+
+const clearModal = () => {
+  isSending.value = false
+  email.value = ''
+}
 
 const isEmailValid = (email: string) => {
   return validator.isEmail(email)
@@ -110,8 +121,12 @@ async function sendEmail() {
     })
 
   if (responseEmailService) {
-    const responseEmailService = emailService.sendEmailResetPassword(dataEmail)
+    const responseEmailService = await emailService.sendEmailResetPassword(dataEmail)
     console.log('responseEmailService:', responseEmailService)
+
+    if (responseEmailService) {
+      isSending.value = true
+    }
   }
 }
 </script>
