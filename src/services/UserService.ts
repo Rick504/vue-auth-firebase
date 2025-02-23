@@ -46,7 +46,7 @@ class UserService {
     try {
       const response = await http.post('/refresh/password/token', passwords, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          reset_token: `Bearer ${token}`,
         },
       })
 

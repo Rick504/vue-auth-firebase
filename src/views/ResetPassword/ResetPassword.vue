@@ -80,8 +80,10 @@ function sendPassword() {
   }
 
   if (token) {
+    console.log('passwords:', passwords)
     userService.refreshPasswordToken(passwords, token).then(
-      () => {
+      (response) => {
+        console.log('response:', response)
         router.push('/reset-password-success')
       }
     ).catch(
