@@ -1,8 +1,13 @@
 <template>
   <div>
-    <button type="button" class="btn border-danger text-danger px-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Deletar conta
-    </button>
+    <div class="d-flex flex-column align-items-center gap-2">
+      <a v-if="!store.user.provider" href="reset-password" type="button" class="btn border-black px-5 w-50">
+        Atualizar senha
+      </a>
+      <button type="button" class="btn border-danger text-danger px-5 w-50" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Deletar conta
+      </button>
+    </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
