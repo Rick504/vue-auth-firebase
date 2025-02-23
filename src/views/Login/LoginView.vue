@@ -22,14 +22,14 @@
         </div>
 
         <div class="mt-3 text-center" v-if="errorLoginGoole">
-          <p class="text-danger">Erro ao realizar login com Google, entre em contato com <a href="/suporte">suporte</a>.</p>
+          <p class="text-danger">{{ textErrorLoginGoogle }}</p>
         </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref } from 'vue'
+import {onMounted, ref } from 'vue'
 import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
 
@@ -47,6 +47,11 @@ const store = useStore()
 const authService = new AuthService()
 const showLogin = ref(true)
 const errorLoginGoole = ref(false)
+const textErrorLoginGoogle = ref('Erro ao realizar login com Google, entre em contato com <a href="/suporte">suporte</a>.')
+
+onMounted(() => {
+  store.loader = false
+})
 
 const toggleLoginVisibility = (value: boolean) => {
   showLogin.value = value
@@ -86,11 +91,13 @@ const loginWithGoogle = async () => {
       router.push('/')
       isLoader(false)
     }
-  } catch {
+  } catch (error){
+    textErrorLoginGoogle.value = error.response.data.error
     isLoader(false)
     errorLoginGoole.value = true
     console.error('Erro ao autenticar com Google:')
   }
+
 }
 
 </script>
