@@ -35,7 +35,7 @@
             <p>Digite seu e-mail abaixo:</p>
             <input v-model="email" type="text" />
             <p v-if="erroEmail" class="text-danger" v-text="msgError"></p>
-            <p v-if="isSending" class="text-success mt-2">
+            <p v-if="successSend" class="text-success mt-2">
               E-mail enviado com sucesso! <br>
               Por favor, verifique sua caixa de entrada.
             </p>
@@ -61,6 +61,7 @@ const linkRefrashPassword = ref('')
 const msgError = ref('')
 const erroEmail = ref(false)
 const isSending = ref(false)
+const successSend = ref(false)
 
 const userService = new UserService()
 const emailService = new EmailService()
@@ -77,6 +78,7 @@ const isEmailValid = (email: string) => {
 const insertError = (error: boolean, text: string) => {
   if (error) {
     erroEmail.value = true
+    isSending.value = false
     return (msgError.value = text)
   }
 
@@ -85,6 +87,7 @@ const insertError = (error: boolean, text: string) => {
 }
 
 async function sendEmail() {
+  isSending.value = true
   insertError(false, '')
 
   if (!isEmailValid(email.value)) {
@@ -96,6 +99,7 @@ async function sendEmail() {
     .requestPasswordReset(email.value)
     .then((response) => {
       linkRefrashPassword.value =  response.resetLink
+      successSend.value = true
       return response
     })
     .catch((error) => {

@@ -9,3 +9,8 @@ export type StoreUser = {
   email: string | null
   photo: string
 }
+
+export type NewPasswords = {
+  newPassword: string
+  confirmNewPassword: string
+}

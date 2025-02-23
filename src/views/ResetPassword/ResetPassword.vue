@@ -1,6 +1,9 @@
 <template>
+  <div class="d-flex justify-content-end w-100">
+    <a href="/" class="btn">Voltar</a>
+  </div>
   <div class="d-flex flex-column align-items-center justify-content-center vh-100">
-     <form @submit.prevent="sendPassword">
+     <form @submit.prevent="sendPassword" class="border border-3 p-5">
         <div class="mb-3">
           <label for="password" class="form-label">Nova senha</label>
           <input
@@ -32,14 +35,22 @@
   </div>
 </template>
 <script setup lang="ts">
+import router from '@/router'
+import UserService from '@/services/UserService'
 import validator from 'validator'
 import { ref } from 'vue'
+import { useRoute } from 'vue-router';
 
 const password = ref('')
 const confirmPassword = ref('')
 const errorConfirmPassword = ref(false)
 const errorLengthPassword = ref(false)
 const minPassword = 6
+
+const route = useRoute();
+const token = route.query.resetToken as string;
+
+const userService = new UserService()
 
 const isMinLength = (value: string, min: number) => {
   return validator.isLength(value, { min })
@@ -63,7 +74,22 @@ function sendPassword() {
     return
   }
 
-  console.log('password:', password.value)
+  const passwords = {
+    newPassword: password.value,
+    confirmNewPassword: confirmPassword.value
+  }
+
+  if (token) {
+    userService.refreshPasswordToken(passwords, token).then(
+      () => {
+        router.push('/reset-password-success')
+      }
+    ).catch(
+      (error) => {
+        console.log('error:', error)
+      }
+    )
+  }
 }
 
 </script>

@@ -1,4 +1,4 @@
-import { CreateUser } from '../types/user'
+import { CreateUser, NewPasswords } from '../types/user'
 import {http} from './config/axios'
 
 class UserService {
@@ -35,6 +35,20 @@ class UserService {
   public async requestPasswordReset(email: string) {
     try {
       const response = await http.post('/request/password/reset', { email })
+
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async refreshPasswordToken(passwords: NewPasswords, token: string) {
+    try {
+      const response = await http.post('/refresh/password/token', passwords, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
       return response.data
     } catch (error) {
