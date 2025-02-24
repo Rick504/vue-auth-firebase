@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div class="d-flex flex-column align-items-center gap-2">
-      <a v-if="!store.user.provider" href="reset-password" type="button" class="btn border-black px-5 w-50">
-        Atualizar senha
-      </a>
-      <button type="button" class="btn border-danger text-danger px-5 w-50" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <div>
+      <button type="button" class="btn border-danger text-danger w-50 py-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Deletar conta
       </button>
     </div>
@@ -27,19 +24,17 @@
 </template>
 <script setup lang="ts">
 import UserService from '@/services/UserService'
-import { useStore } from '@/stores'
 import { useRouter } from 'vue-router'
+import { useStore } from '@/stores'
 
- const store = useStore()
-  const router = useRouter()
+const store = useStore()
+const router = useRouter()
 
-  const userService = new UserService()
+const userService = new UserService()
 
-  async function deleteAccount() {
-    const response = await userService.deleteAccontUser()
-
-    console.log('deleteAccount', response)
-    router.push('/login')
-    store.resetUser()
+async function deleteAccount() {
+  await userService.deleteAccontUser()
+  router.push('/login')
+  store.resetUser()
 }
 </script>

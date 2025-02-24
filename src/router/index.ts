@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/Login/LoginView.vue'
-import ResetPassword from '../views/ResetPassword/ResetPassword.vue'
+import ResetPasswordEmail from '../views/ResetPassword/ResetPasswordEmail.vue'
+import UpdateAcoount from '../views/Profile/components/UpdateAcoount.vue'
 import SuccessReset from '../views/ResetPassword/SuccessReset.vue'
 import useAuth from '../middleware/auth'
 
@@ -15,7 +16,12 @@ const router = createRouter({
     {
       path: '/reset-password',
       name: 'reset-password',
-      component: ResetPassword,
+      component: ResetPasswordEmail,
+    },
+    {
+      path: '/update-account',
+      name: 'update-account',
+      component: UpdateAcoount,
     },
     {
       path: '/reset-password-success',
