@@ -8,6 +8,7 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
       <li><a class="dropdown-item" href="/">Inícil</a></li>
       <li><a class="dropdown-item" href="/profile">Conta</a></li>
+      <li><a class="dropdown-item" href="/support">Suporte</a></li>
       <li><button class="dropdown-item" @click="logout">Sair</button></li>
     </ul>
   </div>

@@ -4,6 +4,8 @@ import ResetPasswordEmail from '../views/ResetPassword/ResetPasswordEmail.vue'
 import UpdateAcoount from '../views/Profile/components/UpdateAcoount.vue'
 import SuccessPage from '../components/messages/SuccessPage.vue'
 import useAuth from '../middleware/auth'
+import SupportView from '@/views/Support/SupportView.vue'
+import SupportChatView from '@/views/Support/chat/SupportChatView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +26,16 @@ const router = createRouter({
       component: UpdateAcoount,
     },
     {
+      path: '/support',
+      name: 'support',
+      component: SupportView,
+    },
+    {
+      path: '/support-chat',
+      name: 'support-chat',
+      component: SupportChatView,
+    },
+    {
       path: '/success/:type',
       name: 'success-page',
       component: SuccessPage,
@@ -33,17 +45,17 @@ const router = createRouter({
             title: 'Senha redefinida com sucesso!',
             message: 'Agora você pode acessar sua conta com sua nova senha.',
             link: '/login',
-            buttonText: 'Ir para login'
+            buttonText: 'Ir para login',
           },
           'updated-account': {
             title: 'Cadastro atualizado com sucesso!',
             message: 'Vá até a página de login para acessar sua conta.',
             link: '/login',
-            buttonText: 'Ir para login'
-          }
-        }
-      }
-    } ,
+            buttonText: 'Ir para login',
+          },
+        },
+      },
+    },
     {
       path: '/',
       name: 'dashboard',

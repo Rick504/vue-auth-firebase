@@ -1,7 +1,5 @@
 <template>
-  <div class="d-flex justify-content-end w-100">
-    <a href="/" class="btn">Voltar</a>
-  </div>
+  <BtnBack link="/" />
   <div class="d-flex flex-column align-items-center justify-content-center vh-100">
      <form @submit.prevent="sendPassword" class="border border-3 p-5">
         <div class="mb-3">
@@ -40,6 +38,7 @@ import UserService from '@/services/UserService'
 import validator from 'validator'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router';
+import BtnBack from '@/components/BtnBack.vue'
 
 const password = ref('')
 const confirmPassword = ref('')
