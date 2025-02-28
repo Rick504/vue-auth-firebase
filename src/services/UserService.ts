@@ -22,6 +22,16 @@ class UserService {
     }
   }
 
+  public async updateAccontUser(user: CreateUser) {
+    try {
+      const response = await http.put('/update/user', user)
+
+      return response
+    } catch (error) {
+      throw error
+    }
+  }
+
   public async deleteAccontUser() {
     try {
       const response = await http.delete('/delete/user')

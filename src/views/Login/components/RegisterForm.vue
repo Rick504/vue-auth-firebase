@@ -204,8 +204,12 @@ const register = async () => {
         }
 
       } else {
-        console.log('update account', user)
-        isLoader(false)
+        const userUpdateSuccess = await userService.updateAccontUser(user)
+        if (userUpdateSuccess.status === 200) {
+          router.push('/login')
+          store.resetUser()
+          isLoader(false)
+        }
       }
     }
   } catch {
