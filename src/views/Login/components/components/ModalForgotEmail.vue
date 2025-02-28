@@ -12,7 +12,7 @@
       aria-hidden="true"
     >
       <div class="modal-dialog">
-        <div class="modal-content">
+        <form @submit.prevent="sendEmail" class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="ModalForgotEmailLabel">Esqueci Minha Senha</h5>
             <button
@@ -41,11 +41,11 @@
             </p>
           </div>
           <div class="modal-footer d-flex justify-content-start">
-            <button @click="sendEmail" type="button" class="btn btn-success px-5" :disabled="isSending">
+            <button type="submit" class="btn btn-success px-5" :disabled="isSending">
               <strong>Enviar</strong>
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
