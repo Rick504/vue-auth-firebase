@@ -1,5 +1,5 @@
 import { CreateUser, NewPasswords } from '../types/user'
-import {http} from './config/axios'
+import { http } from './config/axios'
 
 class UserService {
   public async getUserInfo() {
@@ -47,6 +47,20 @@ class UserService {
       const response = await http.post('/refresh/password/token', passwords, {
         headers: {
           reset_token: `Bearer ${token}`,
+        },
+      })
+
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async getRememberUser(token: string) {
+    try {
+      const response = await http.get('/token/info', {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       })
 

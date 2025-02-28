@@ -2,7 +2,7 @@ import { StoreUser } from '@/types/user'
 import { defineStore } from 'pinia'
 
 export const useStore = defineStore('main', {
-  state: (): { loader: boolean; user: StoreUser } => {
+  state: (): { loader: boolean; user: StoreUser; tokenRememberLogin: string } => {
     return {
       loader: false,
       user: {
@@ -10,6 +10,7 @@ export const useStore = defineStore('main', {
         email: null,
         photo: '',
       },
+      tokenRememberLogin: '',
     }
   },
   actions: {

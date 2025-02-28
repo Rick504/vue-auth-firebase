@@ -5,6 +5,7 @@ class AuthService {
   public async login(dataUser: LoginUserSimple) {
     try {
       const response = await http.post('/login', dataUser)
+
       return response.data
     } catch (error) {
       throw error

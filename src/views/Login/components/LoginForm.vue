@@ -53,12 +53,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
 import { LoginUserSimple } from '@/types/auth'
 import ModalForgotEmail from './components/ModalForgotEmail.vue'
+import Cookies from 'js-cookie'
 
 import { useStore } from '@/stores/index'
 import { StoreUser } from '@/types/user'
@@ -67,10 +68,23 @@ const store = useStore()
 const router = useRouter()
 const email = ref('')
 const password = ref('')
-const rememberMe = ref(false)
 const errorLogin = ref(false)
 const showPassword = ref(false)
 const authService = new AuthService()
+const rememberMe = ref(false)
+
+const userService = new UserService()
+
+onMounted(async () => {
+  const tokenRememberLogin = Cookies.get('remember_me')
+  if (tokenRememberLogin) {
+    store.tokenRememberLogin = tokenRememberLogin as string
+    const { decoded_token } = await userService.getRememberUser(tokenRememberLogin)
+
+    email.value = decoded_token.userDataJWT.email
+    rememberMe.value = true
+  }
+})
 
 const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value

@@ -22,6 +22,13 @@ const authInterceptor = (config) => {
 const errorInterceptor = (error) => Promise.reject(error)
 const responseInterceptor = async (response) => {
   const token = response.data?.token
+
+  const tokenRememberEmailLogin = response.data?.user?.tokenRememberEmailLogin
+
+  if (tokenRememberEmailLogin) {
+    Cookies.set('remember_me', token, { expires: 30, secure: true })
+  }
+
   if (token) {
     Cookies.set('Authorization', token, { expires: 1 / 24, secure: true }) // 1 hora
   }

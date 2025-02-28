@@ -49,6 +49,8 @@ const showLogin = ref(true)
 const errorLoginGoole = ref(false)
 const textErrorLoginGoogle = ref('Erro ao realizar login com Google, entre em contato com <a href="/suporte">suporte</a>.')
 
+const userService = new UserService()
+
 onMounted(() => {
   store.loader = false
 })
@@ -62,7 +64,6 @@ const isLoader = (value: boolean) => {
 }
 
 const getInfoUser = async () => {
-  const userService = new UserService()
   const { data } = await userService.getUserInfo()
   return data
 }
