@@ -62,17 +62,17 @@
         </div>
       </div>
 
-      <TermText />
+      <TermText v-if="!props.updateAccount" />
 
       <div class="mt-3" v-if="textPositions.errorRegisterUser">
         <p class="text-danger">{{ textPositions.errorRegisterUser }}</p>
       </div>
 
       <div class="mt-4">
-        <button type="submit" class="btn btn-success w-100">Registrar</button>
+        <button type="submit" class="btn btn-success w-100">{{ props.updateAccount? 'Atualizar conta' : 'Registrar' }}</button>
       </div>
     </form>
-    <div class="text-center mt-3 mb-2">
+    <div v-if="!props.updateAccount" class="text-center mt-3 mb-2">
       <small>Ou registre-se com:</small>
     </div>
   </div>
@@ -89,11 +89,16 @@ import { useStore } from '@/stores/index'
 import router from '@/router'
 const store = useStore()
 
+const props = defineProps<{
+  updateAccount: boolean
+}>()
+
 const userName = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 const userService = new UserService()
+
 
 const textPositions = ref<{ [key: string]: string }>({
   errorUserName: '',
@@ -101,6 +106,11 @@ const textPositions = ref<{ [key: string]: string }>({
   errorConfirmPassword: '',
   errorRegisterUser: ''
 })
+
+if (store.user) {
+  userName.value = store.user.name || ''
+  email.value = store.user.email || ''
+}
 
 function clearErrorsForm() {
   setError('errorUserName', '')
@@ -181,13 +191,20 @@ const register = async () => {
         email: email.value.trim(),
         password: password.value,
       }
-      clearErrorsForm()
-      const userSave = await userService.registerUser(user)
 
-      if (userSave) {
-        const userInfo = await getInfoUser()
-        store.user = userInfo as StoreUser
-        router.push('/')
+      if (!props.updateAccount) {
+        clearErrorsForm()
+        const userSave = await userService.registerUser(user)
+
+        if (userSave) {
+          const userInfo = await getInfoUser()
+          store.user = userInfo as StoreUser
+          router.push('/')
+          isLoader(false)
+        }
+
+      } else {
+        console.log('update account', user)
         isLoader(false)
       }
     }
