@@ -100,7 +100,15 @@ const getInfoUser = async () => {
   return data
 }
 
+function removeTokenRemember() {
+  if (!rememberMe.value) {
+    Cookies.remove('remember_me')
+    store.tokenRememberLogin = ''
+  }
+}
+
 const login = async () => {
+  removeTokenRemember()
   isLoader(true)
   const userInfoAuth: LoginUserSimple = {
     email: email.value,
