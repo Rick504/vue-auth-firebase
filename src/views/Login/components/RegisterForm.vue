@@ -206,7 +206,7 @@ const register = async () => {
       } else {
         const userUpdateSuccess = await userService.updateAccontUser(user)
         if (userUpdateSuccess.status === 200) {
-          router.push('/login')
+          router.push('/success/updated-account')
           store.resetUser()
           isLoader(false)
         }

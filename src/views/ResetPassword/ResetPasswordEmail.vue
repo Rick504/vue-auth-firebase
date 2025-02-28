@@ -82,7 +82,7 @@ function sendPassword() {
   if (token) {
     userService.refreshPasswordToken(passwords, token).then(
       () => {
-        router.push('/reset-password-success')
+        router.push('/success/reset-password')
       }
     ).catch(
       (error) => {

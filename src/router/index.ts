@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/Login/LoginView.vue'
 import ResetPasswordEmail from '../views/ResetPassword/ResetPasswordEmail.vue'
 import UpdateAcoount from '../views/Profile/components/UpdateAcoount.vue'
-import SuccessReset from '../views/ResetPassword/SuccessReset.vue'
+import SuccessPage from '../components/messages/SuccessPage.vue'
 import useAuth from '../middleware/auth'
 
 const router = createRouter({
@@ -24,10 +24,26 @@ const router = createRouter({
       component: UpdateAcoount,
     },
     {
-      path: '/reset-password-success',
-      name: 'reset-password-success',
-      component: SuccessReset,
-    },
+      path: '/success/:type',
+      name: 'success-page',
+      component: SuccessPage,
+      meta: {
+        contentMap: {
+          'reset-password': {
+            title: 'Senha redefinida com sucesso!',
+            message: 'Agora você pode acessar sua conta com sua nova senha.',
+            link: '/login',
+            buttonText: 'Ir para login'
+          },
+          'updated-account': {
+            title: 'Cadastro atualizado com sucesso!',
+            message: 'Vá até a página de login para acessar sua conta.',
+            link: '/login',
+            buttonText: 'Ir para login'
+          }
+        }
+      }
+    } ,
     {
       path: '/',
       name: 'dashboard',
