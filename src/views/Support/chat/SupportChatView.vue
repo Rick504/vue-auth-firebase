@@ -36,19 +36,23 @@ import { ref } from 'vue'
 import BtnBack from '@/components/BtnBack.vue'
 import ErrorMessage from '@/components/messages/ErrorMessage.vue'
 
+import { useStore } from '@/stores'
+const store = useStore()
+
 const subject = ref('Assunto do chat')
 const selectedCategory = ref('')
 const message = ref('')
 const categorys = [
-  { value: '0', label: '' },
-  { value: '1', label: 'Categoria 1' },
-  { value: '2', label: 'Categoria 2' },
-  { value: '3', label: 'Categoria 3' }
+  { value: 'Assuntos Gerais', label: 'Assuntos Gerais' },
+  { value: 'Assuntos Gerais', label: 'Categoria 1' },
+  { value: 'Assuntos Gerais', label: 'Categoria 2' },
+  { value: 'Assuntos Gerais', label: 'Categoria 3' }
 ]
 
 const errorSubject = ref(false)
 const errorCategory = ref(false)
 const errorMessage = ref(false)
+const emailSupport = import.meta.env.VITE_SUPPORT_EMAIL
 
 function clearErrorsForm() {
   errorCategory.value = false
@@ -74,11 +78,14 @@ function createChat() {
     return
   }
 
-  const chatData = {
-    category: selectedCategory.value,
-    subject: subject.value,
-    message: message.value
-  }
-  console.log(chatData)
+    const chatData = {
+      category: selectedCategory.value,
+      senderEmail: store.user.email,
+      recipientsEmails: emailSupport,
+      title: subject.value,
+      content: message.value
+    }
+    console.log(chatData)
+
 }
 </script>

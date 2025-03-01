@@ -24,16 +24,28 @@ const router = createRouter({
       path: '/update-account',
       name: 'update-account',
       component: UpdateAcoount,
+      beforeEnter: (to, from, next) => {
+        useAuth()
+        next()
+      },
     },
     {
       path: '/support',
       name: 'support',
       component: SupportView,
+      beforeEnter: (to, from, next) => {
+        useAuth()
+        next()
+      },
     },
     {
       path: '/support-chat',
       name: 'support-chat',
       component: SupportChatView,
+      beforeEnter: (to, from, next) => {
+        useAuth()
+        next()
+      },
     },
     {
       path: '/success/:type',
