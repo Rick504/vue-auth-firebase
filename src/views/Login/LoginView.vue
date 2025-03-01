@@ -46,7 +46,7 @@ const store = useStore()
 const authService = new AuthService()
 const showLogin = ref(true)
 const errorLoginGoole = ref(false)
-const textErrorLoginGoogle = ref('Erro ao realizar login com Google, entre em contato com <a href="/suporte">suporte</a>.')
+const textErrorLoginGoogle = ref('Erro ao realizar login com Google, tente novamente mais tarde, caso não tenha sucesso entre em contato com suporte.')
 
 const userService = new UserService()
 
@@ -93,11 +93,11 @@ const loginWithGoogle = async () => {
       isLoader(false)
     }
   } catch (error){
+    isLoader(false)
+    errorLoginGoole.value = true
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     textErrorLoginGoogle.value = error.response.data.error
-    isLoader(false)
-    errorLoginGoole.value = true
   }
 
 }
