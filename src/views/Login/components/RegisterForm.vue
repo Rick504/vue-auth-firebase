@@ -12,9 +12,7 @@
           required
         />
       </div>
-      <div class="mt-3" v-if="textPositions.errorUserName">
-        <p class="text-danger">{{ textPositions.errorUserName }}</p>
-      </div>
+      <ErrorMessage v-if="textPositions.errorUserName" :text="textPositions.errorUserName" />
 
       <div class="mb-3">
         <label for="email" class="form-label">E-mail</label>
@@ -27,9 +25,7 @@
           required
         />
       </div>
-      <div class="mt-3" v-if="textPositions.errorEmail">
-        <p class="text-danger">{{ textPositions.errorEmail }}</p>
-      </div>
+      <ErrorMessage v-if="textPositions.errorEmail" :text="textPositions.errorEmail" />
 
       <div class="mb-3 position-relative">
         <label for="password" class="form-label">Senha</label>
@@ -57,16 +53,11 @@
             required
           />
         </div>
-        <div class="mt-3" v-if="textPositions.errorConfirmPassword">
-          <p class="text-danger">{{ textPositions.errorConfirmPassword }}</p>
-        </div>
+        <ErrorMessage v-if="textPositions.errorConfirmPassword" :text="textPositions.errorConfirmPassword" />
       </div>
 
       <TermText v-if="!props.updateAccount" />
-
-      <div class="mt-3" v-if="textPositions.errorRegisterUser">
-        <p class="text-danger">{{ textPositions.errorRegisterUser }}</p>
-      </div>
+      <ErrorMessage v-if="textPositions.errorRegisterUser" :text="textPositions.errorRegisterUser" />
 
       <div class="mt-4">
         <button type="submit" class="btn btn-success w-100">{{ props.updateAccount? 'Atualizar conta' : 'Registrar' }}</button>
@@ -84,6 +75,7 @@ import validator from 'validator'
 import TermText from './components/TermText.vue'
 import UserService from '@/services/UserService'
 import { CreateUser, StoreUser } from '@/types/user'
+import ErrorMessage from '@/components/messages/ErrorMessage.vue'
 
 import { useStore } from '@/stores/index'
 import router from '@/router'

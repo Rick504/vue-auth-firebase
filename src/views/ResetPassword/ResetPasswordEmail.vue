@@ -25,7 +25,7 @@
               required
             />
           </div>
-          <p  v-if="errorConfirmPassword" class="text-danger">As senhas não são iguais.</p>
+          <ErrorMessage v-if="errorConfirmPassword" text="As senhas não são iguais." />
           <p  v-if="errorLengthPassword" class="text-danger">Campo deve ter pelo menos {{minPassword}} caracteres.</p>
         </div>
         <button type="submit" class="btn btn-success w-100">Criar nova senha</button>
@@ -39,6 +39,7 @@ import validator from 'validator'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router';
 import BtnBack from '@/components/BtnBack.vue'
+import ErrorMessage from '@/components/messages/ErrorMessage.vue'
 
 const password = ref('')
 const confirmPassword = ref('')

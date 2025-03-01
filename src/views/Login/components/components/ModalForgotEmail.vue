@@ -34,7 +34,7 @@
             </p>
             <p>Digite seu e-mail abaixo:</p>
             <input v-model="email" type="text" />
-            <p v-if="erroEmail" class="text-danger" v-text="msgError"></p>
+            <ErrorMessage v-if="erroEmail" :text="msgError" />
             <p v-if="successSend" class="text-success mt-2">
               E-mail enviado com sucesso! <br>
               Por favor, verifique sua caixa de entrada.
@@ -55,6 +55,7 @@ import EmailService from '@/services/EmailService'
 import UserService from '@/services/UserService'
 import validator from 'validator'
 import { ref } from 'vue'
+import ErrorMessage from '@/components/messages/ErrorMessage.vue'
 
 const email = ref('')
 const linkRefrashPassword = ref('')

@@ -21,9 +21,7 @@
           </button>
         </div>
 
-        <div class="mt-3 text-center" v-if="errorLoginGoole">
-          <p class="text-danger">{{ textErrorLoginGoogle }}</p>
-        </div>
+        <ErrorMessage v-if="errorLoginGoole" :text="textErrorLoginGoogle" />
     </div>
   </div>
 </template>
@@ -38,6 +36,7 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { LoginWithGoole } from '@/types/auth'
 import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
+import ErrorMessage from '@/components/messages/ErrorMessage.vue'
 
 import { useStore } from '@/stores/index'
 import router from '@/router'

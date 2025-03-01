@@ -32,9 +32,7 @@
               <i :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
             </button>
           </div>
-          <div class="mt-3" v-if="errorLogin">
-            <p class="text-danger">Usuário ou senha incorretos</p>
-          </div>
+          <ErrorMessage v-if="errorLogin" text="Usuário ou senha incorretos" />
         </div>
 
         <label for="rememberMe" class="py-3 d-flex align-items-center">
@@ -60,6 +58,7 @@ import UserService from '@/services/UserService'
 import { LoginUserSimple } from '@/types/auth'
 import ModalForgotEmail from './components/ModalForgotEmail.vue'
 import Cookies from 'js-cookie'
+import ErrorMessage from '@/components/messages/ErrorMessage.vue'
 
 import { useStore } from '@/stores/index'
 import { StoreUser } from '@/types/user'
