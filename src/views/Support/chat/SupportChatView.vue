@@ -12,7 +12,7 @@
 
       <div class="mb-3">
         <label for="subject" class="form-label">Assunto</label>
-        <input type="text" id="subject" v-model="subject" class="form-control" />
+        <input type="text" id="subject" v-model="subject" class="form-control" placeholder="Assunto do chat" />
         <ErrorMessage v-if="errorSubject" text="O assunto deve ter pelo menos 3 caracteres." />
       </div>
 
@@ -37,9 +37,13 @@ import BtnBack from '@/components/BtnBack.vue'
 import ErrorMessage from '@/components/messages/ErrorMessage.vue'
 
 import { useStore } from '@/stores'
+import ChatService from '@/services/ChatService'
+import router from '@/router'
 const store = useStore()
 
-const subject = ref('Assunto do chat')
+const chatService = new ChatService()
+
+const subject = ref('')
 const selectedCategory = ref('')
 const message = ref('')
 const categorys = [
@@ -60,7 +64,7 @@ function clearErrorsForm() {
   errorMessage.value = false
 }
 
-function createChat() {
+async function createChat() {
   clearErrorsForm()
 
   if (!selectedCategory.value) {
@@ -78,14 +82,18 @@ function createChat() {
     return
   }
 
-    const chatData = {
-      category: selectedCategory.value,
-      senderEmail: store.user.email,
-      recipientsEmails: emailSupport,
-      title: subject.value,
-      content: message.value
-    }
-    console.log(chatData)
+  if (!store.user.email) return
+
+  const chatData = {
+    category: selectedCategory.value,
+    senderEmail: store.user.email,
+    recipientsEmails: [emailSupport],
+    title: subject.value,
+    content: message.value
+  }
+
+  const result = await chatService.chatCreate(chatData)
+  if (result) router.push({ path: '/success/support-send-email' })
 
 }
 </script>

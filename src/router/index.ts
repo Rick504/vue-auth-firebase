@@ -65,6 +65,12 @@ const router = createRouter({
             link: '/login',
             buttonText: 'Ir para login',
           },
+          'support-send-email': {
+            title: 'E-mail enviado ao suporte com sucesso, aguarde o retorno de nossa equipe.',
+            message: 'Vá até a página de suporte.',
+            link: '/support',
+            buttonText: 'Ir para suporte',
+          },
         },
       },
     },
