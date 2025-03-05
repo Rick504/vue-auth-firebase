@@ -5,3 +5,10 @@ export interface CreateChat {
   title: string
   content: string
 }
+
+export interface Ticket {
+  id: number
+  subject: string
+  lastResponse: string
+  status: string
+}
