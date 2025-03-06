@@ -23,3 +23,10 @@ export interface MapAllChats {
     _seconds: number
   }
 }
+
+export interface Message {
+  id: string
+  senderName: string
+  content: string
+  timestamp: { _seconds: number; _nanoseconds: number }
+}

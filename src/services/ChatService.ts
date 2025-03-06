@@ -21,6 +21,16 @@ class ChatService {
       throw error
     }
   }
+
+  public async getMessagesChat(id: string) {
+    try {
+      const response = await http.get(`/chat-message?id=${id}`)
+
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default ChatService

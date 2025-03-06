@@ -16,7 +16,7 @@
         <tbody>
           <tr v-for="ticket in tickets" :key="ticket.id">
             <th scope="row">
-              <button class="btn">
+              <button class="btn" @click="goToChat(ticket.id.toString())">
                 <strong>{{ ticket.title }}</strong>
               </button>
             </th>
@@ -32,12 +32,14 @@
 <script setup lang="ts">
 import { defineProps, watch } from 'vue'
 import { Ticket } from '@/types/chat'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{ ticketsData: Ticket[] }>()
 
 import { ref } from 'vue'
 
 const tickets = ref(props.ticketsData || [])
+const router = useRouter()
 
 watch(() => props.ticketsData, (newTickets) => {
   tickets.value = newTickets
@@ -57,5 +59,9 @@ const getStatusLabel = (status: string) => {
 const formatDate = (date: string) => {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
   return new Date(date).toLocaleDateString('pt-BR', options)
+}
+
+const goToChat = (id: string) => {
+  router.push({ name: 'SupportMessagesView', params: { id } })
 }
 </script>
