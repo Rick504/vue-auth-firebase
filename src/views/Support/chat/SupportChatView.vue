@@ -46,12 +46,9 @@ const chatService = new ChatService()
 const subject = ref('')
 const selectedCategory = ref('')
 const message = ref('')
-const categorys = [
-  { value: 'Assuntos Gerais', label: 'Assuntos Gerais' },
-  { value: 'Assuntos Gerais', label: 'Categoria 1' },
-  { value: 'Assuntos Gerais', label: 'Categoria 2' },
-  { value: 'Assuntos Gerais', label: 'Categoria 3' }
-]
+
+import { categories } from '@/data/support/categories.json'
+const categorys = categories
 
 const errorSubject = ref(false)
 const errorCategory = ref(false)
