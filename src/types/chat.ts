@@ -30,3 +30,9 @@ export interface Message {
   content: string
   timestamp: { _seconds: number; _nanoseconds: number }
 }
+
+export interface CreateMessageChat {
+  chatId: string
+  senderId: string
+  content: string
+}
