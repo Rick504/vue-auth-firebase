@@ -89,7 +89,8 @@ async function createChat() {
     senderEmail: store.user.email,
     recipientsEmails: [emailSupport],
     title: subject.value,
-    content: message.value
+    content: message.value,
+    type: 'support'
   }
 
   const result = await chatService.chatCreate(chatData)
