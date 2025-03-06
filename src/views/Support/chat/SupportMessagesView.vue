@@ -46,7 +46,7 @@ import router from '@/router'
 const route = useRoute()
 const chatId = route.params.id
 const chatService = new ChatService()
-const messages = ref([])
+const messages = ref<CreateMessageChat[]>([])
 const response = ref('')
 const errorSendMessage = ref(false)
 
@@ -66,14 +66,22 @@ const sendMessage = async () => {
   }
   errorSendMessage.value = false
 
-  const dataSendMessage: CreateMessageChat = {
-    content: response.value,
-    senderId: 'OnB9tiwaSDh1DZMmwz12',
-    chatId: chatId as string
+  if (!response.value || !chatId) {
+    errorSendMessage.value = true
+    return
   }
+  const senderId = messages.value.length > 0 ? messages.value[0].senderId : null;
 
-  await chatService.createMessagesChat(dataSendMessage)
-  router.go(0)
+  if (senderId) {
+    const dataSendMessage: CreateMessageChat = {
+      content: response.value,
+      senderId: senderId,
+      chatId: chatId as string
+    }
+
+    await chatService.createMessagesChat(dataSendMessage)
+    router.go(0)
+  }
 }
 </script>
 
