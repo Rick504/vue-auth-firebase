@@ -206,7 +206,7 @@ const register = async () => {
     }
   } catch {
     isLoader(false)
-    setError('errorRegisterUser', 'Este e-mail já está em uso. Tente fazer login ou cadastre-se com outro endereço de e-mail.')
+    setError('errorRegisterUser', 'Erro ao efetuar login, talvez este e-mail já está em uso. Tente fazer login ou cadastre-se com outro endereço de e-mail.')
   }
 }
 

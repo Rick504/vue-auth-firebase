@@ -17,7 +17,7 @@
           <tr v-for="ticket in tickets" :key="ticket.id">
             <th scope="row">
               <button class="btn">
-                <strong>{{ ticket.subject }}</strong>
+                <strong>{{ ticket.title }}</strong>
               </button>
             </th>
             <td>{{ ticket.lastResponse }}</td>

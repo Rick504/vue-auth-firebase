@@ -14,9 +14,9 @@ import TableTickets from './chat/TableTickets.vue'
 import { Ticket } from '@/types/chat'
 
 const ticketsData = ref<Ticket[]>([
-  { id: 1, subject: 'Problema no login', lastResponse: '2025-03-01', status: 'Aberto' },
-  { id: 2, subject: 'Erro no pagamento', lastResponse: '2025-03-02', status: 'Fechado' },
-  { id: 3, subject: 'Dúvida sobre o produto', lastResponse: '2025-03-03', status: 'Em andamento' },
+  { id: 1, title: 'Problema no login', lastResponse: '2025-03-01', status: 'Aberto' },
+  { id: 2, title: 'Erro no pagamento', lastResponse: '2025-03-02', status: 'Fechado' },
+  { id: 3, title: 'Dúvida sobre o produto', lastResponse: '2025-03-03', status: 'Em andamento' },
 ])
 
 

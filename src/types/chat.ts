@@ -8,7 +8,7 @@ export interface CreateChat {
 
 export interface Ticket {
   id: number
-  subject: string
+  title: string
   lastResponse: string
   status: string
 }
