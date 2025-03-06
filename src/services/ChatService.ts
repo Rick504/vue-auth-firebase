@@ -11,6 +11,16 @@ class ChatService {
       throw error
     }
   }
+
+  public async allChatsInfo(type: string) {
+    try {
+      const response = await http.post('/all-chats-info', { type })
+
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default ChatService

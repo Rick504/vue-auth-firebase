@@ -12,3 +12,14 @@ export interface Ticket {
   lastResponse: string
   status: string
 }
+
+export interface MapAllChats {
+  id: string
+  lastMessage: {
+    title: string
+    status: string
+  }
+  updatedAt: {
+    _seconds: number
+  }
+}
