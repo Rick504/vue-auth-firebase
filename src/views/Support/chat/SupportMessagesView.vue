@@ -11,9 +11,9 @@
       <div v-else class="messages-list">
         <ul class="list-group">
           <li v-for="(message, index) in sortedMessages" :key="message.id"
-          :class="['list-group-item', { 'own-message': index % 2 !== 0, 'other-message': index % 2 === 0 }]">
+          :class="['list-group-item', getMessageClass(index)]">
           <div class="message-header">
-              <strong>{{ message.senderName }}</strong>
+              <strong>{{ getMessageClass(index) !== 'other-message' ? 'Suporte' : message.senderName }}</strong>
               <span class="message-date">{{ formatDate(message.timestamp) }}</span>
             </div>
             <div class="message-content">{{ message.content }}</div>
@@ -49,6 +49,10 @@ const chatService = new ChatService()
 const messages = ref<CreateMessageChat[]>([])
 const response = ref('')
 const errorSendMessage = ref(false)
+
+const getMessageClass = (index: number) => {
+  return index % 2 === 0 ? 'other-message' : 'own-message';
+}
 
 onMounted(async () => {
   const result = await chatService.getMessagesChat(chatId as string)
