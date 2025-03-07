@@ -38,9 +38,10 @@ import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
 import ErrorMessage from '@/components/messages/ErrorMessage.vue'
 
-import { useStore } from '@/stores/index'
 import router from '@/router'
 import { StoreUser } from '@/types/user'
+
+import { useStore } from '@/stores/index'
 const store = useStore()
 
 const authService = new AuthService()

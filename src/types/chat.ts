@@ -32,7 +32,9 @@ export interface Message {
 }
 
 export interface CreateMessageChat {
-  chatId: string
-  senderId: string
-  content: string
+  chatId: string;
+  authorName: string;
+  authorEmail: string;
+  senderId: string;
+  content: string;
 }

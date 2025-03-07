@@ -10,17 +10,17 @@
       </div>
       <div v-else class="messages-list">
         <ul class="list-group">
-          <li v-for="(message, index) in sortedMessages" :key="message.id"
-          :class="['list-group-item', getMessageClass(index)]">
+          <li v-for="(message) in sortedMessages" :key="message.id"
+          :class="['list-group-item', getMessageClass(message.authorName)]">
           <div class="message-header">
-              <strong>{{ getMessageClass(index) !== 'other-message' ? 'Suporte' : message.senderName }}</strong>
+              <strong>{{ message.authorName }}</strong>
               <span class="message-date">{{ formatDate(message.timestamp) }}</span>
             </div>
             <div class="message-content">{{ message.content }}</div>
           </li>
         </ul>
       </div>
-      <div class="response-section" v-if="!canRespond">
+      <div class="response-section" v-if="canRespond">
         <textarea v-model="response" class="response-input" placeholder="Responder"></textarea>
         <div v-if="errorSendMessage" class="text-danger w-100" role="alert">
           A resposta deve ter no mínimo 10 caracteres.
@@ -43,6 +43,9 @@ import { formatDate } from '@/utils/formatDate'
 import { CreateMessageChat } from '@/types/chat'
 import router from '@/router'
 
+import { useStore } from '@/stores/index'
+const store = useStore()
+
 const route = useRoute()
 const chatId = route.params.id
 const chatService = new ChatService()
@@ -50,8 +53,8 @@ const messages = ref<CreateMessageChat[]>([])
 const response = ref('')
 const errorSendMessage = ref(false)
 
-const getMessageClass = (index: number) => {
-  return index % 2 === 0 ? 'other-message' : 'own-message';
+const getMessageClass = (authorName: string) => {
+  return authorName === store.user.name ? 'other-message' : 'own-message';
 }
 
 onMounted(async () => {
@@ -61,7 +64,10 @@ onMounted(async () => {
 
 const sortedMessages = computed(() => messages.value)
 
-const canRespond = computed(() => messages.value.length % 2 !== 0)
+const canRespond = computed(() => {
+  const lastMessage = messages.value[messages.value.length - 1];
+  return lastMessage && lastMessage.authorName !== store.user.name;
+})
 
 const sendMessage = async () => {
   if (response.value.trim().length < 10){
@@ -76,9 +82,15 @@ const sendMessage = async () => {
   }
   const senderId = messages.value.length > 0 ? messages.value[0].senderId : null;
 
+  if (!store.user.name || !store.user.email) {
+    return router.push({ name: 'Login' })
+  }
+
   if (senderId) {
     const dataSendMessage: CreateMessageChat = {
       content: response.value,
+      authorName: store.user.name,
+      authorEmail: store.user.email,
       senderId: senderId,
       chatId: chatId as string
     }
