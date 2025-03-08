@@ -14,12 +14,12 @@ import TableTickets from './chat/TableTickets.vue'
 import { MapAllChats, Ticket } from '@/types/chat'
 import ChatService from '@/services/ChatService'
 
+import { useStore } from '@/stores/index'
+const store = useStore()
+
 const chatService = new ChatService()
 const ticketsData = ref<Ticket[]>([])
 const type = 'support'
-
-import { useStore } from '@/stores/index'
-const store = useStore()
 
 onMounted(async () => {
   try {

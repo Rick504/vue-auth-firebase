@@ -33,11 +33,9 @@
 import { defineProps, watch } from 'vue'
 import { Ticket } from '@/types/chat'
 import { useRouter } from 'vue-router'
-
-const props = defineProps<{ ticketsData: Ticket[] }>()
-
 import { ref } from 'vue'
 
+const props = defineProps<{ ticketsData: Ticket[] }>()
 const tickets = ref(props.ticketsData || [])
 const router = useRouter()
 
