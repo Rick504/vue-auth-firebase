@@ -5,8 +5,8 @@
       <div class="chat-header">
         <h3>Mensagens do Suporte</h3>
       </div>
-      <div v-if="!messages || messages.length === 0" class="alert alert-danger" role="alert">
-        Não há mensagens para este chat.
+      <div v-if="!messages || messages.length === 0" role="alert">
+        Carregando mensagens...
       </div>
       <div v-else class="messages-list" ref="messagesList">
         <ul class="list-group">
@@ -29,9 +29,6 @@
           A resposta deve ter no mínimo 10 caracteres.
         </div>
         <button class="btn btn-success" @click="sendMessage">Enviar resposta</button>
-      </div>
-      <div v-else class="alert" role="alert">
-        Aguarde a resposta do suporte.
       </div>
     </div>
   </div>
@@ -59,7 +56,9 @@ const showScrollButton = ref(true)
 const messagesList = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
+  store.setLoader(true)
   const result = await chatService.getMessagesChat(chatId as string)
+  if (result) store.setLoader(false)
   messages.value = result.messages.sort((a, b) => a.timestamp._seconds - b.timestamp._seconds)
 })
 
