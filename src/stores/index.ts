@@ -14,6 +14,9 @@ export const useStore = defineStore('main', {
     }
   },
   actions: {
+    setLoader(value: boolean) {
+      this.loader = value
+    },
     resetUser() {
       this.user = {
         name: null,

@@ -59,17 +59,13 @@ const toggleLoginVisibility = (value: boolean) => {
   showLogin.value = value
 }
 
-const isLoader = (value: boolean) => {
-  return (store.loader = value)
-}
-
 const getInfoUser = async () => {
   const { data } = await userService.getUserInfo()
   return data
 }
 
 const loginWithGoogle = async () => {
-  isLoader(true)
+  store.setLoader(true)
   const provider = new GoogleAuthProvider()
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -91,10 +87,10 @@ const loginWithGoogle = async () => {
       store.user = userInfo as StoreUser
       store.user.provider = true
       router.push('/')
-      isLoader(false)
+      store.setLoader(false)
     }
   } catch (error){
-    isLoader(false)
+    store.setLoader(false)
     errorLoginGoole.value = true
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

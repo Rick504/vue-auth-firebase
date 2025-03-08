@@ -89,10 +89,6 @@ const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value
 }
 
-const isLoader = (value: boolean) => {
-  return (store.loader = value)
-}
-
 const getInfoUser = async () => {
   const userService = new UserService()
   const { data } = await userService.getUserInfo()
@@ -108,7 +104,7 @@ function removeTokenRemember() {
 
 const login = async () => {
   removeTokenRemember()
-  isLoader(true)
+  store.setLoader(true)
   const userInfoAuth: LoginUserSimple = {
     email: email.value,
     password: password.value,
@@ -122,11 +118,11 @@ const login = async () => {
         store.user = userInfo as StoreUser
         router.push('/')
         errorLogin.value = false
-        isLoader(false)
+        store.setLoader(false)
       }
     }
   } catch {
-    isLoader(false)
+    store.setLoader(false)
     errorLogin.value = true
     console.error('Erro ao autenticar:')
   }

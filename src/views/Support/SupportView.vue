@@ -16,11 +16,14 @@ import ChatService from '@/services/ChatService'
 
 const chatService = new ChatService()
 const ticketsData = ref<Ticket[]>([])
-
 const type = 'support'
+
+import { useStore } from '@/stores/index'
+const store = useStore()
 
 onMounted(async () => {
   try {
+    store.setLoader(true)
     const result = await chatService.allChatsInfo(type)
 
     ticketsData.value = result.chatsInfo.map((chat: MapAllChats) => ({
@@ -29,7 +32,9 @@ onMounted(async () => {
       lastResponse: new Date(chat.updatedAt._seconds * 1000).toISOString().split('T')[0],
       status: chat.lastMessage.status
     }))
+    store.setLoader(false)
   } catch (error) {
+    store.setLoader(false)
     console.error('Erro ao buscar informações dos chats:', error)
   }
 })

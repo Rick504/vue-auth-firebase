@@ -146,33 +146,29 @@ const setError = (position: string, text: string) => {
   textPositions.value[position] = text
 }
 
-const isLoader = (value: boolean) => {
-  return (store.loader = value)
-}
-
 const register = async () => {
-  isLoader(true)
+  store.setLoader(true)
   clearErrorsForm()
 
   if (!validateMinLength('errorUserName', userName.value, 6) || !validateUserName(userName.value)) {
-    isLoader(false)
+    store.setLoader(false)
     return
   }
 
   if (!isEmailValid(email.value)) {
     setError('errorEmail', 'Por favor, insira um e-mail válido.')
-    isLoader(false)
+    store.setLoader(false)
     return
   }
 
   if (password.value !== confirmPassword.value) {
     setError('errorConfirmPassword', 'As senhas não são iguais.')
-    isLoader(false)
+    store.setLoader(false)
     return
   }
 
   if (!validateMinLength('errorPassword', password.value, 6) || !validateMinLength('errorConfirmPassword', confirmPassword.value, 6)) {
-    isLoader(false)
+    store.setLoader(false)
     return
   }
 
@@ -192,7 +188,7 @@ const register = async () => {
           const userInfo = await getInfoUser()
           store.user = userInfo as StoreUser
           router.push('/')
-          isLoader(false)
+          store.setLoader(false)
         }
 
       } else {
@@ -200,12 +196,12 @@ const register = async () => {
         if (userUpdateSuccess.status === 200) {
           router.push('/success/updated-account')
           store.resetUser()
-          isLoader(false)
+          store.setLoader(false)
         }
       }
     }
   } catch {
-    isLoader(false)
+    store.setLoader(false)
     setError('errorRegisterUser', 'Erro ao efetuar login, talvez este e-mail já está em uso. Tente fazer login ou cadastre-se com outro endereço de e-mail.')
   }
 }
