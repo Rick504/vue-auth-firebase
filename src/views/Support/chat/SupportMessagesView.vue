@@ -8,7 +8,7 @@
       <div v-if="!messages || messages.length === 0" class="alert alert-danger" role="alert">
         Não há mensagens para este chat.
       </div>
-      <div v-else class="messages-list">
+      <div v-else class="messages-list" ref="messagesList">
         <ul class="list-group">
           <li v-for="(message) in sortedMessages" :key="message.id"
           :class="['list-group-item', getMessageClass(message.authorName)]">
@@ -19,6 +19,9 @@
             <div class="message-content">{{ message.content }}</div>
           </li>
         </ul>
+        <button v-if="messages.length > 0" class="btn btn-primary scroll-btn" @click="scrollToLastMessage" :class="{ 'd-none': !showScrollButton }">
+          Ir para última mensagem
+        </button>
       </div>
       <div class="response-section" v-if="canRespond">
         <textarea v-model="response" class="response-input" placeholder="Responder"></textarea>
@@ -52,15 +55,24 @@ const chatService = new ChatService()
 const messages = ref<CreateMessageChat[]>([])
 const response = ref('')
 const errorSendMessage = ref(false)
-
-const getMessageClass = (authorName: string) => {
-  return authorName === store.user.name ? 'other-message' : 'own-message';
-}
+const showScrollButton = ref(true)
+const messagesList = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
   const result = await chatService.getMessagesChat(chatId as string)
   messages.value = result.messages.sort((a, b) => a.timestamp._seconds - b.timestamp._seconds)
 })
+
+const getMessageClass = (authorName: string) => {
+  return authorName === store.user.name ? 'other-message' : 'own-message';
+}
+
+const scrollToLastMessage = () => {
+  showScrollButton.value = false
+  if (messagesList.value) {
+    messagesList.value.scrollTop = messagesList.value.scrollHeight
+  }
+}
 
 const sortedMessages = computed(() => messages.value)
 
@@ -102,6 +114,16 @@ const sendMessage = async () => {
 </script>
 
 <style scoped>
+.scroll-btn {
+  background-color: rgb(100, 100, 223);
+  border-radius: 30px;
+  position: sticky;
+  bottom: 10px;
+  left: 43%;
+  align-self: flex-start;
+  z-index: 1;
+}
+
 .support-messages-container {
   display: flex;
   flex-direction: column;
