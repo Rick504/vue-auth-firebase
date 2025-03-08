@@ -1,10 +1,7 @@
 <template>
   <div class="w-75">
     <h3 class="mt-5">Solicitações recentes</h3>
-    <div v-if="!tickets || tickets.length === 0" class="alert alert-info" role="alert">
-      Não há solicitações recentes.
-    </div>
-    <div v-else>
+    <div v-if="tickets.length > 0">
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -26,11 +23,14 @@
         </tbody>
       </table>
     </div>
+    <div v-else class="alert alert-info" role="alert">
+      Não há solicitações recentes.
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, watch } from 'vue'
+import { computed, defineProps, watch } from 'vue'
 import { Ticket } from '@/types/chat'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
@@ -38,6 +38,7 @@ import { ref } from 'vue'
 const props = defineProps<{ ticketsData: Ticket[] }>()
 const tickets = ref(props.ticketsData || [])
 const router = useRouter()
+const shouldShowAlert = computed(() => !tickets.value.length)
 
 watch(() => props.ticketsData, (newTickets) => {
   tickets.value = newTickets
@@ -60,6 +61,6 @@ const formatDate = (date: string) => {
 }
 
 const goToChat = (id: string) => {
-  router.push({ name: 'SupportMessagesView', params: { id } })
+  router.push({ name: 'MessagesView', params: { id } })
 }
 </script>

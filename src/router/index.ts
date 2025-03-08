@@ -6,7 +6,7 @@ import SuccessPage from '../components/messages/SuccessPage.vue'
 import useAuth from '../middleware/auth'
 import SupportView from '@/views/Support/SupportView.vue'
 import SupportChatView from '@/views/Support/chat/SupportChatView.vue'
-import SupportMessagesView from '@/views/Support/chat/SupportMessagesView.vue'
+import MessagesView from '@/views/Support/chat/MessagesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,8 +50,8 @@ const router = createRouter({
     },
     {
       path: '/support-chat-messages/:id',
-      name: 'SupportMessagesView',
-      component: SupportMessagesView,
+      name: 'MessagesView',
+      component: MessagesView,
       props: true,
       beforeEnter: (to, from, next) => {
         useAuth()
