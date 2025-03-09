@@ -33,9 +33,9 @@ onMounted(async () => {
       status: chat.lastMessage.status
     }))
     store.setLoader(false)
-  } catch (error) {
+  } catch {
+    ticketsData.value = []
     store.setLoader(false)
-    console.error('Erro ao buscar informações dos chats:', error)
   }
 })
 </script>

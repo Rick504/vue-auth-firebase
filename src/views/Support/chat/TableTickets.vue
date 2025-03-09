@@ -23,22 +23,28 @@
         </tbody>
       </table>
     </div>
-    <div v-else class="alert alert-info" role="alert">
+    <div v-if="shouldShowAlert()" class="alert alert-info" role="alert">
       Não há solicitações recentes.
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, watch } from 'vue'
+import { defineProps, watch } from 'vue'
 import { Ticket } from '@/types/chat'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { useStore } from '@/stores/index'
+
+const store = useStore()
 
 const props = defineProps<{ ticketsData: Ticket[] }>()
 const tickets = ref(props.ticketsData || [])
 const router = useRouter()
-const shouldShowAlert = computed(() => !tickets.value.length)
+
+const shouldShowAlert = () => {
+  return store.loader === false && tickets.value.length === 0
+}
 
 watch(() => props.ticketsData, (newTickets) => {
   tickets.value = newTickets
