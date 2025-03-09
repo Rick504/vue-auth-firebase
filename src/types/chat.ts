@@ -1,9 +1,11 @@
 export interface CreateChat {
-  category?: string
-  senderEmail: string
+  category: string
+  authorName: string
+  authorEmail: string
   recipientsEmails: string[]
   title: string
   content: string
+  type?: string
 }
 
 export interface Ticket {

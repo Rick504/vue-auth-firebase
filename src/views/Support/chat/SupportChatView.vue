@@ -62,28 +62,37 @@ function clearErrorsForm() {
 }
 
 async function createChat() {
+  store.setLoader(true)
   clearErrorsForm()
 
   if (!selectedCategory.value) {
     errorCategory.value = true
+    store.setLoader(false)
     return
   }
 
   if (!subject.value || subject.value.length < 3) {
     errorSubject.value = true
+    store.setLoader(false)
     return
   }
 
   if (!message.value || message.value.length < 10) {
     errorMessage.value = true
+    store.setLoader(false)
     return
   }
 
-  if (!store.user.email) return
+  if (!store.user.email || !store.user.name) {
+    errorMessage.value = true
+    store.setLoader(false)
+    return
+  }
 
   const chatData = {
     category: selectedCategory.value,
-    senderEmail: store.user.email,
+    authorName: store.user.name,
+    authorEmail: store.user.email,
     recipientsEmails: [emailSupport],
     title: subject.value,
     content: message.value,
@@ -91,7 +100,11 @@ async function createChat() {
   }
 
   const result = await chatService.chatCreate(chatData)
-  if (result) router.push({ path: '/success/support-send-email' })
+  if (result) {
+    store.setLoader(false)
+    router.push({ path: '/success/support-send-email' })
+  }
+
 
 }
 </script>
