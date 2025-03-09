@@ -30,29 +30,31 @@
         </div>
         <button class="btn btn-success" @click="sendMessage">Enviar resposta</button>
       </div>
+      <div v-else class="text-center" ref="scrollButton">
+          Aguarde a resposta do suporte.
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watchEffect, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import ChatService from '@/services/ChatService'
 import BtnBack from '@/components/BtnBack.vue'
 import { formatDate } from '@/utils/formatDate'
 import { CreateMessageChat } from '@/types/chat'
 import router from '@/router'
-
 import { useStore } from '@/stores/index'
-const store = useStore()
 
+const store = useStore()
 const route = useRoute()
 const chatId = route.params.id
 const chatService = new ChatService()
 const messages = ref<CreateMessageChat[]>([])
 const response = ref('')
 const errorSendMessage = ref(false)
-const showScrollButton = ref(true)
+const showScrollButton = ref(false)
 const messagesList = ref<HTMLElement | null>(null)
 
 onMounted(async () => {
@@ -60,28 +62,42 @@ onMounted(async () => {
   const result = await chatService.getMessagesChat(chatId as string)
   if (result) store.setLoader(false)
   messages.value = result.messages.sort((a, b) => a.timestamp._seconds - b.timestamp._seconds)
+
+  await nextTick()
+  checkScroll()
+})
+
+const checkScroll = () => {
+  if (messagesList.value) {
+    showScrollButton.value = messagesList.value.scrollHeight > messagesList.value.clientHeight
+  }
+}
+
+watchEffect(() => {
+  messages.value.length
+  nextTick(checkScroll)
 })
 
 const getMessageClass = (authorName: string) => {
-  return authorName === store.user.name ? 'other-message' : 'own-message';
+  return authorName === store.user.name ? 'other-message' : 'own-message'
 }
 
 const scrollToLastMessage = () => {
-  showScrollButton.value = false
   if (messagesList.value) {
     messagesList.value.scrollTop = messagesList.value.scrollHeight
+    showScrollButton.value = false
   }
 }
 
 const sortedMessages = computed(() => messages.value)
 
 const canRespond = computed(() => {
-  const lastMessage = messages.value[messages.value.length - 1];
-  return lastMessage && lastMessage.authorName !== store.user.name;
+  const lastMessage = messages.value[messages.value.length - 1]
+  return lastMessage && lastMessage.authorName !== store.user.name
 })
 
 const sendMessage = async () => {
-  if (response.value.trim().length < 10){
+  if (response.value.trim().length < 10) {
     errorSendMessage.value = true
     return
   }
@@ -91,7 +107,7 @@ const sendMessage = async () => {
     errorSendMessage.value = true
     return
   }
-  const senderId = messages.value.length > 0 ? messages.value[0].senderId : null;
+  const senderId = messages.value.length > 0 ? messages.value[0].senderId : null
 
   if (!store.user.name || !store.user.email) {
     return router.push({ name: 'Login' })
