@@ -3,6 +3,7 @@ import LoginView from '../views/Login/LoginView.vue'
 import ResetPasswordEmail from '../views/ResetPassword/ResetPasswordEmail.vue'
 import UpdateAcoount from '../views/Profile/components/UpdateAcoount.vue'
 import SuccessPage from '../components/messages/SuccessPage.vue'
+import ErrorPage from '../components/messages/ErrorPage.vue'
 import useAuth from '../middleware/auth'
 import SupportView from '@/views/Support/SupportView.vue'
 import SupportChatView from '@/views/Support/chat/SupportChatView.vue'
@@ -15,6 +16,7 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
+      meta: { header: false },
     },
     {
       path: '/reset-password',
@@ -34,6 +36,7 @@ const router = createRouter({
       path: '/support',
       name: 'support',
       component: SupportView,
+      meta: { header: true },
       beforeEnter: (to, from, next) => {
         useAuth()
         next()
@@ -92,8 +95,24 @@ const router = createRouter({
       },
     },
     {
+      path: '/error/:type',
+      name: 'error-page',
+      component: ErrorPage,
+      meta: {
+        contentMap: {
+          'expired-token': {
+            title: 'Sessão expirada.',
+            message: 'Realize o login novamente.',
+            link: '/login',
+            buttonText: 'Ir para login',
+          },
+        },
+      },
+    },
+    {
       path: '/',
       name: 'dashboard',
+      meta: { header: true },
       component: () => import('../views/Dashboard/DashboardView.vue'),
       beforeEnter: (to, from, next) => {
         useAuth()
@@ -103,6 +122,7 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
+      meta: { header: true },
       component: () => import('../views/Profile/ProfileView.vue'),
       beforeEnter: (to, from, next) => {
         useAuth()
