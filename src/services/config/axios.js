@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import router from '@/router'
 
 function options(url) {
   return {
@@ -37,6 +38,10 @@ const responseInterceptor = async (response) => {
 
 const responseErrorInterceptor = (error) => {
   console.error('Erro global de resposta:', error.response)
+  if (error.response && error.response.status === 401) {
+    router.push('/error/expired-token')
+    Cookies.remove('Authorization')
+  }
   return Promise.reject(error)
 }
 
