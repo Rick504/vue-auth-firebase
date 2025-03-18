@@ -9,6 +9,7 @@ export type StoreUser = {
   email: string | null
   photo: string
   provider?: boolean
+  emailConfirmed: boolean | null
 }
 
 export type NewPasswords = {

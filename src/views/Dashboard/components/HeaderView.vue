@@ -1,4 +1,5 @@
 <template>
+  <EmailConfirmed v-if="!store.user.emailConfirmed" />
   <div class="d-flex justify-content-end w-100 p-3">
 
     <div class="dropdown">
@@ -16,6 +17,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import EmailConfirmed from '../../../components/EmailConfirmed.vue'
 import router from '@/router'
 import { useStore } from '@/stores/index'
 const store = useStore()

@@ -16,4 +16,6 @@ import ImgProfile from './components/ImgProfile.vue'
 
 import { useStore } from '@/stores/index'
 const store = useStore()
+
+
 </script>

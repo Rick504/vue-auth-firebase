@@ -9,6 +9,7 @@ export const useStore = defineStore('main', {
         name: null,
         email: null,
         photo: '',
+        emailConfirmed: null,
       },
       tokenRememberLogin: '',
     }
@@ -22,6 +23,7 @@ export const useStore = defineStore('main', {
         name: null,
         email: null,
         photo: '',
+        emailConfirmed: null
       }
     },
   },
