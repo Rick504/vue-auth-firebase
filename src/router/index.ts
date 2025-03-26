@@ -106,6 +106,12 @@ const router = createRouter({
             link: '/login',
             buttonText: 'Ir para login',
           },
+          'account-deleted': {
+            title: 'Essa conta foi deletada.',
+            message: 'Realize um novo cadastro ou entre em contato com o suporte.',
+            link: '/login',
+            buttonText: 'Ir para tela inicial',
+          },
         },
       },
     },

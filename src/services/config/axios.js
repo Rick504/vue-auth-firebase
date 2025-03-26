@@ -38,6 +38,12 @@ const responseInterceptor = async (response) => {
 
 const responseErrorInterceptor = (error) => {
   console.error('Erro global de resposta:', error.response)
+
+  if (error.response.data.deleted) {
+    router.push('/error/account-deleted')
+    return Promise.reject(error)
+  }
+
   if (error.response && error.response.status === 401) {
     router.push('/error/expired-token')
     Cookies.remove('Authorization')
