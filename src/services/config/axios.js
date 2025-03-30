@@ -44,10 +44,15 @@ const responseErrorInterceptor = (error) => {
     return Promise.reject(error)
   }
 
-  if (error.response && error.response.status === 401) {
+  if (
+    error.response &&
+    error.response.status === 401 &&
+    error.response.data.error === 'token_expired'
+  ) {
     router.push('/error/expired-token')
     Cookies.remove('Authorization')
   }
+
   return Promise.reject(error)
 }
 
