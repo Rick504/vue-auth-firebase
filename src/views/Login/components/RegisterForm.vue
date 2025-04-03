@@ -60,7 +60,7 @@
       <ErrorMessage v-if="textPositions.errorRegisterUser" :text="textPositions.errorRegisterUser" />
 
       <div class="mt-4">
-        <button type="submit" class="btn btn-success w-100">{{ props.updateAccount? 'Atualizar conta' : 'Registrar' }}</button>
+        <BtnCuve type="submit" :text="props.updateAccount? 'Atualizar conta' : 'Registrar'" />
       </div>
     </form>
     <div v-if="!props.updateAccount" class="text-center mt-3 mb-2">
@@ -70,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+import BtnCuve from '@/components/BtnCuve.vue'
 import { ref } from 'vue'
 import validator from 'validator'
 import TermText from './components/TermText.vue'

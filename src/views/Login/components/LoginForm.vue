@@ -24,6 +24,7 @@
               placeholder="Digite sua senha"
               required
             />
+
             <button
               type="button"
               class="btn btn-outline-secondary"
@@ -42,7 +43,9 @@
           <ModalForgotEmail />
         </label>
 
-        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        <div class="d-flex align-items-center justify-content-center">
+          <BtnCuve type="submit" text="Entrar" />
+        </div>
       </form>
       <div class="text-center mt-3 mb-2">
         <small>Conectar com:</small>
@@ -59,6 +62,7 @@ import { LoginUserSimple } from '@/types/auth'
 import ModalForgotEmail from './components/ModalForgotEmail.vue'
 import Cookies from 'js-cookie'
 import ErrorMessage from '@/components/messages/ErrorMessage.vue'
+import BtnCuve from '@/components/BtnCuve.vue'
 
 import { useStore } from '@/stores/index'
 import { StoreUser } from '@/types/user'
