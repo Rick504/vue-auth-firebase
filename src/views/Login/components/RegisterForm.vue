@@ -74,6 +74,7 @@ import { ref } from 'vue'
 import validator from 'validator'
 import TermText from './components/TermText.vue'
 import UserService from '@/services/UserService'
+import EmailService from '@/services/EmailService'
 import { CreateUser, StoreUser } from '@/types/user'
 import ErrorMessage from '@/components/messages/ErrorMessage.vue'
 
@@ -89,8 +90,9 @@ const userName = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-const userService = new UserService()
 
+const userService = new UserService()
+const emailService = new EmailService()
 
 const textPositions = ref<{ [key: string]: string }>({
   errorUserName: '',
@@ -146,6 +148,15 @@ const setError = (position: string, text: string) => {
   textPositions.value[position] = text
 }
 
+async function sendEmailActiveUser(email: string) {
+    const dataEmail = {
+      to: email,
+      link: 'testlinkpelofront.com',
+    }
+    const responseSendEmailActiveAccount = await emailService.sendEmailActiveEmailAccount(dataEmail)
+    console.log('responseSendEmailActiveAccount:', responseSendEmailActiveAccount)
+}
+
 const register = async () => {
   store.setLoader(true)
   clearErrorsForm()
@@ -189,6 +200,7 @@ const register = async () => {
           store.user = userInfo as StoreUser
           router.push('/')
           store.setLoader(false)
+          await sendEmailActiveUser(user.email)
         }
 
       } else {

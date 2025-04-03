@@ -1,4 +1,4 @@
-export type SendEmailRefrashPassword = {
+export type SendEmail = {
   to: string
-  link: string
+  link?: string
 }

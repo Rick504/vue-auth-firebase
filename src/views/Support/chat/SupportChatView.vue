@@ -62,49 +62,52 @@ function clearErrorsForm() {
 }
 
 async function createChat() {
-  store.setLoader(true)
-  clearErrorsForm()
+  try {
+    store.setLoader(true)
+    clearErrorsForm()
 
-  if (!selectedCategory.value) {
-    errorCategory.value = true
+    if (!selectedCategory.value) {
+      errorCategory.value = true
+      store.setLoader(false)
+      return
+    }
+
+    if (!subject.value || subject.value.length < 3) {
+      errorSubject.value = true
+      store.setLoader(false)
+      return
+    }
+
+    if (!message.value || message.value.length < 10) {
+      errorMessage.value = true
+      store.setLoader(false)
+      return
+    }
+
+    if (!store.user.email || !store.user.name) {
+      errorMessage.value = true
+      store.setLoader(false)
+      return
+    }
+
+    const chatData = {
+      category: selectedCategory.value,
+      authorName: store.user.name,
+      authorEmail: store.user.email,
+      recipientsEmails: [emailSupport],
+      title: subject.value,
+      content: message.value,
+      type: 'support'
+    }
+
+    const result = await chatService.chatCreate(chatData)
+    if (result) {
+      store.setLoader(false)
+      router.push({ path: '/success/support-send-email' })
+    }
+  } catch (error) {
+    console.error('Error creating chat:', error)
     store.setLoader(false)
-    return
   }
-
-  if (!subject.value || subject.value.length < 3) {
-    errorSubject.value = true
-    store.setLoader(false)
-    return
-  }
-
-  if (!message.value || message.value.length < 10) {
-    errorMessage.value = true
-    store.setLoader(false)
-    return
-  }
-
-  if (!store.user.email || !store.user.name) {
-    errorMessage.value = true
-    store.setLoader(false)
-    return
-  }
-
-  const chatData = {
-    category: selectedCategory.value,
-    authorName: store.user.name,
-    authorEmail: store.user.email,
-    recipientsEmails: [emailSupport],
-    title: subject.value,
-    content: message.value,
-    type: 'support'
-  }
-
-  const result = await chatService.chatCreate(chatData)
-  if (result) {
-    store.setLoader(false)
-    router.push({ path: '/success/support-send-email' })
-  }
-
-
 }
 </script>

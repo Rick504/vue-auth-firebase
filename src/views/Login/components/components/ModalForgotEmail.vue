@@ -39,6 +39,10 @@
               E-mail enviado com sucesso! <br>
               Por favor, verifique sua caixa de entrada.
             </p>
+            <p v-if="errorSendEmail" class="text-danger mt-2">
+              Ocorreu um erro ao enviar o e-mail. <br>
+              Por favor, tente novamente mais tarde.
+            </p>
           </div>
           <div class="modal-footer d-flex justify-content-start">
             <button type="submit" class="btn btn-success px-5" :disabled="isSending">
@@ -63,6 +67,7 @@ const msgError = ref('')
 const erroEmail = ref(false)
 const isSending = ref(false)
 const successSend = ref(false)
+const errorSendEmail = ref(false)
 
 const userService = new UserService()
 const emailService = new EmailService()
@@ -99,11 +104,11 @@ async function sendEmail() {
   const responseEmailService = await userService
     .requestPasswordReset(email.value)
     .then((response) => {
-      linkRefrashPassword.value =  response.resetLink
-      successSend.value = true
+      linkRefrashPassword.value = response.resetLink
       return response
     })
     .catch((error) => {
+      errorSendEmail.value = true
       const axiosError = error
       if (axiosError.response?.status === 404) {
         insertError(true, 'Usuário não encontrado.')
@@ -116,17 +121,20 @@ async function sendEmail() {
       }
     })
 
-  if (responseEmailService) {
-     const dataEmail = {
-      to: email.value,
-      link: linkRefrashPassword.value,
+    if (responseEmailService) {
+      const dataEmail = {
+        to: email.value,
+        link: linkRefrashPassword.value,
+      }
+
+      const _responseEmailService = await emailService.sendEmailResetPassword(dataEmail)
+
+      if (_responseEmailService) {
+        successSend.value = true
+        return isSending.value = true
+      }
     }
 
-    const responseEmailService = await emailService.sendEmailResetPassword(dataEmail)
-
-    if (responseEmailService)
-      return isSending.value = true
-  }
 }
 </script>
 
