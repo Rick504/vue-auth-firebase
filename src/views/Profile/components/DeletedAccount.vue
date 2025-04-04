@@ -1,9 +1,7 @@
 <template>
   <div>
     <div>
-      <button type="button" class="btn border-danger text-danger w-50 py-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Deletar conta
-      </button>
+      <BtnLoudSquid type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" text="Deletar conta" color="red"/>
     </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -26,6 +24,7 @@
 import UserService from '@/services/UserService'
 import { useRouter } from 'vue-router'
 import { useStore } from '@/stores'
+import BtnLoudSquid from '@/components/BtnLoudSquid.vue'
 
 const store = useStore()
 const router = useRouter()
@@ -38,3 +37,9 @@ async function deleteAccount() {
   store.resetUser()
 }
 </script>
+
+<style>
+h5 {
+  color: #212529;
+}
+</style>

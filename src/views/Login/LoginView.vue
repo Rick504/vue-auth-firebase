@@ -2,8 +2,8 @@
   <div id="LoginForm" class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%">
       <h2 class="d-flex justify-content-around mb-3">
-        <button class="btn text-white btn-success border px-5" @click="toggleLoginVisibility(true)">Entrar</button>
-        <button class="btn text-white btn-success border px-5" @click="toggleLoginVisibility(false)">Registro</button>
+        <BtnLoudSquid @click="toggleLoginVisibility(true)" text="Entrar" />
+        <BtnLoudSquid @click="toggleLoginVisibility(false)" text="Registro" />
       </h2>
 
       <div>
@@ -30,6 +30,7 @@
 import {onMounted, ref } from 'vue'
 import LoginForm from './components/LoginForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
+import BtnLoudSquid from '@/components/BtnLoudSquid.vue'
 
 import { auth } from '@/firebase'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'

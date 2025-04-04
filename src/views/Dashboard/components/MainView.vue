@@ -3,7 +3,7 @@
     <div>
       <ImgProfile />
     </div>
-    <p>{{ store.user.name }}</p>
+    <p class="mt-5">{{ store.user.name }}</p>
     <p>Email: {{ store.user.email }}</p>
   </div>
   <div v-else>
