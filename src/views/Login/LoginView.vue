@@ -8,7 +8,7 @@
 
       <div>
         <LoginForm v-if="showLogin" />
-        <RegisterForm v-else :updateAccount="false" />
+        <RegisterForm v-else :updateAccount="false" :fieldEmail="true" />
       </div>
 
       <div class="text-center">

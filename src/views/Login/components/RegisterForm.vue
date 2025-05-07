@@ -14,7 +14,7 @@
       </div>
       <ErrorMessage v-if="textPositions.errorUserName" :text="textPositions.errorUserName" />
 
-      <div class="mb-3">
+      <div class="mb-3" v-if="props.fieldEmail">
         <label for="email" class="form-label">E-mail</label>
         <input
           id="email"
@@ -85,6 +85,7 @@ const store = useStore()
 
 const props = defineProps<{
   updateAccount: boolean
+  fieldEmail: boolean
 }>()
 
 const userName = ref('')

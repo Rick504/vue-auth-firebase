@@ -1,6 +1,6 @@
 <template>
   <div class="container w-25 mt-5">
-    <RegisterForm :updateAccount="true" />
+    <RegisterForm :updateAccount="true" :fieldEmail="false" />
   </div>
 </template>
 <script setup lang="ts">
